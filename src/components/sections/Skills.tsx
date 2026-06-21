@@ -193,8 +193,8 @@ export default function Skills() {
           }}
           className="skills-grid"
         >
-          {/* Tech grid */}
-          <div>
+          {/* Tech grid + supporting content */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(4, 1fr)',
@@ -215,6 +215,101 @@ export default function Skills() {
                 <TechTile key={i} {...tech} delay={i * 0.05} />
               ))}
             </div>
+
+            {/* Quick stats row */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '12px',
+            }}>
+              {[
+                { value: '3', label: 'Internships' },
+                { value: '5+', label: 'Projects' },
+                { value: '4', label: 'Languages' },
+              ].map((stat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
+                  viewport={{ once: true }}
+                  className="space-card"
+                  style={{ padding: '18px 12px', textAlign: 'center', borderRadius: '16px' }}
+                >
+                  <div style={{
+                    fontFamily: 'var(--font-space)',
+                    fontSize: '1.7rem',
+                    fontWeight: 700,
+                    background: 'linear-gradient(135deg, #A78BFA, #06B6D4)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                    lineHeight: 1,
+                  }}>
+                    {stat.value}
+                  </div>
+                  <div style={{
+                    marginTop: '6px',
+                    fontSize: '0.72rem',
+                    color: 'var(--gray)',
+                    fontFamily: 'var(--font-inter)',
+                    letterSpacing: '0.04em',
+                  }}>
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Currently leveling up */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="space-card"
+              style={{ padding: '22px 22px', borderRadius: '18px' }}
+            >
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                marginBottom: '14px',
+              }}>
+                <div style={{
+                  height: '2px',
+                  width: '24px',
+                  background: '#06B6D4',
+                  boxShadow: '0 0 8px #06B6D4',
+                  borderRadius: '2px',
+                }} />
+                <span style={{
+                  fontSize: '0.75rem',
+                  color: '#06B6D4',
+                  fontFamily: 'var(--font-inter)',
+                  fontWeight: 600,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                }}>
+                  Currently Leveling Up
+                </span>
+              </div>
+              <p style={{
+                fontSize: '0.86rem',
+                color: 'var(--gray)',
+                fontFamily: 'var(--font-inter)',
+                lineHeight: 1.7,
+                marginBottom: '14px',
+              }}>
+                Always exploring new tools and AI workflows to sharpen my craft across design,
+                development, and QA.
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                {['Python', 'NoSQL', 'Android Studio', 'AI Tools', 'API Testing'].map((s, i) => (
+                  <span key={i} className="tech-badge">{s}</span>
+                ))}
+              </div>
+            </motion.div>
           </div>
 
           {/* Skill bars */}

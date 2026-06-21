@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import Image from 'next/image';
+import Avatar3D from '@/components/three/Avatar3D';
 
 const ROLES = ['UI/UX Designer', 'Frontend Developer', 'QA Engineer', 'Team Leader'];
 
@@ -91,40 +91,6 @@ export default function Hero() {
           animation: 'nebula-pulse 6s ease-in-out infinite',
         }}
       />
-
-      {/* Planet arc glow at top */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '-300px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '800px',
-          height: '600px',
-          borderRadius: '50%',
-          border: '2px solid rgba(124,58,237,0.25)',
-          boxShadow: '0 0 60px rgba(124,58,237,0.2), inset 0 0 60px rgba(124,58,237,0.05)',
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* Twinkling stars */}
-      {Array.from({ length: 30 }).map((_, i) => (
-        <div
-          key={i}
-          style={{
-            position: 'absolute',
-            width: `${Math.random() * 3 + 1}px`,
-            height: `${Math.random() * 3 + 1}px`,
-            borderRadius: '50%',
-            background: '#fff',
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            animation: `twinkle ${2 + Math.random() * 4}s ease-in-out ${Math.random() * 3}s infinite`,
-            pointerEvents: 'none',
-          }}
-        />
-      ))}
 
       <div
         style={{
@@ -324,6 +290,7 @@ export default function Hero() {
             justifyContent: 'center',
           }}
         >
+          <div className="orbital-scale">
           <div
             ref={orbitalRef}
             style={{
@@ -384,37 +351,36 @@ export default function Hero() {
               }}
             />
 
-            {/* Center: Photo */}
+            {/* Center: Live 3D avatar (follows cursor + rotates on scroll) */}
             <div
               style={{
                 position: 'absolute',
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%,-50%)',
-                width: '130px',
-                height: '130px',
-                borderRadius: '50%',
-                overflow: 'hidden',
-                border: '3px solid rgba(124,58,237,0.6)',
-                boxShadow: '0 0 30px rgba(124,58,237,0.5), 0 0 60px rgba(124,58,237,0.2)',
-                animation: 'glow-pulse 3s ease-in-out infinite',
+                width: '260px',
+                height: '300px',
                 zIndex: 10,
               }}
             >
-              <Image
-                src="/anush.jpeg"
-                alt="Anush Kulal M"
-                width={130}
-                height={130}
-                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                priority
+              {/* glow halo behind the avatar */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: '10%',
+                  borderRadius: '50%',
+                  background: 'radial-gradient(circle, rgba(124,58,237,0.35) 0%, transparent 65%)',
+                  filter: 'blur(8px)',
+                  animation: 'glow-pulse 4s ease-in-out infinite',
+                }}
               />
+              <Avatar3D />
             </div>
 
             {/* Orbiting skill icons */}
             {ORBIT_SKILLS.map((skill, i) => {
               const rad = (skill.angle * Math.PI) / 180;
-              const radius = 160;
+              const radius = 188;
               const x = 210 + radius * Math.cos(rad);
               const y = 210 + radius * Math.sin(rad);
               return (
@@ -482,25 +448,31 @@ export default function Hero() {
               }}
             />
           </div>
+          </div>
         </div>
       </div>
 
       <style>{`
+        .orbital-scale { transform: scale(1); transform-origin: center; }
+        @media (max-width: 1100px) {
+          .orbital-scale { transform: scale(0.88); }
+        }
         @media (max-width: 900px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
-            gap: 50px !important;
+            gap: 40px !important;
             text-align: center;
           }
           .hero-grid > div:last-child {
             justify-content: center !important;
           }
+          .orbital-scale { transform: scale(0.92); }
         }
         @media (max-width: 480px) {
-          .hero-grid > div:last-child > div {
-            width: 320px !important;
-            height: 320px !important;
-          }
+          .orbital-scale { transform: scale(0.74); }
+        }
+        @media (max-width: 360px) {
+          .orbital-scale { transform: scale(0.62); }
         }
       `}</style>
     </section>
