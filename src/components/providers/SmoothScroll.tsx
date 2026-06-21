@@ -31,11 +31,16 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     }
     rafId = requestAnimationFrame(raf);
 
-    // Expose lenis globally for GSAP ScrollTrigger
+    const handleResize = () => {
+      lenis.resize();
+    };
+    window.addEventListener('resize', handleResize);
+
     (window as unknown as Record<string, unknown>).__lenis__ = lenis;
 
     return () => {
       cancelAnimationFrame(rafId);
+      window.removeEventListener('resize', handleResize);
       lenis.destroy();
     };
   }, []);

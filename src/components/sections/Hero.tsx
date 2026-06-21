@@ -1,72 +1,62 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
 
-const Scene = dynamic(() => import('@/components/three/Scene'), {
-  ssr: false,
-  loading: () => null,
-});
+const ROLES = ['UI/UX Designer', 'Frontend Developer', 'QA Engineer', 'Team Leader'];
 
-const ROLES = [
-  'UI/UX Designer',
-  'Frontend Developer',
-  'QA Engineer',
-  'Team Leader',
-  'Problem Solver',
+const ORBIT_SKILLS = [
+  { emoji: '🎨', label: 'Figma', angle: 0 },
+  { emoji: '⚛️', label: 'React', angle: 45 },
+  { emoji: '🟨', label: 'JavaScript', angle: 90 },
+  { emoji: '🟢', label: 'Node.js', angle: 135 },
+  { emoji: '🐍', label: 'Python', angle: 180 },
+  { emoji: '☕', label: 'Java', angle: 225 },
+  { emoji: '🖌️', label: 'Canva', angle: 270 },
+  { emoji: '🐙', label: 'Git', angle: 315 },
 ];
 
-function TypewriterText() {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [displayed, setDisplayed] = useState('');
+function useTypewriter(texts: string[], speed = 80, pause = 2000) {
+  const [display, setDisplay] = useState('');
+  const [textIdx, setTextIdx] = useState(0);
+  const [charIdx, setCharIdx] = useState(0);
   const [deleting, setDeleting] = useState(false);
-  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    if (paused) {
-      const t = setTimeout(() => setPaused(false), 1200);
-      return () => clearTimeout(t);
-    }
-    const current = ROLES[roleIndex];
-    if (!deleting) {
-      if (displayed.length < current.length) {
-        const t = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 80);
-        return () => clearTimeout(t);
-      } else {
-        setPaused(true);
-        const t = setTimeout(() => setDeleting(true), 100);
-        return () => clearTimeout(t);
-      }
-    } else {
-      if (displayed.length > 0) {
-        const t = setTimeout(() => setDisplayed(current.slice(0, displayed.length - 1)), 45);
-        return () => clearTimeout(t);
-      } else {
-        setDeleting(false);
-        setRoleIndex((i) => (i + 1) % ROLES.length);
-      }
-    }
-  }, [displayed, deleting, roleIndex, paused]);
+    const current = texts[textIdx];
+    let timeout: ReturnType<typeof setTimeout>;
 
-  return (
-    <span className="inline-flex items-center">
-      <span className="gradient-text font-semibold">{displayed}</span>
-      <span className="ml-1 inline-block w-0.5 h-7 bg-blue-400 rounded-full" style={{ animation: 'glow-pulse 1s ease-in-out infinite' }} />
-    </span>
-  );
+    if (!deleting && charIdx < current.length) {
+      timeout = setTimeout(() => setCharIdx(c => c + 1), speed);
+    } else if (!deleting && charIdx === current.length) {
+      timeout = setTimeout(() => setDeleting(true), pause);
+    } else if (deleting && charIdx > 0) {
+      timeout = setTimeout(() => setCharIdx(c => c - 1), speed / 2);
+    } else if (deleting && charIdx === 0) {
+      setDeleting(false);
+      setTextIdx(i => (i + 1) % texts.length);
+    }
+
+    setDisplay(current.slice(0, charIdx));
+    return () => clearTimeout(timeout);
+  }, [charIdx, deleting, textIdx, texts, speed, pause]);
+
+  return display;
 }
 
 export default function Hero() {
-  const mousePosition = useRef({ x: 0, y: 0 });
+  const orbitalRef = useRef<HTMLDivElement>(null);
+  const role = useTypewriter(ROLES);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      mousePosition.current = {
-        x: (e.clientX / window.innerWidth) * 2 - 1,
-        y: -(e.clientY / window.innerHeight) * 2 + 1,
-      };
+      if (!orbitalRef.current) return;
+      const rect = orbitalRef.current.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / window.innerWidth;
+      const dy = (e.clientY - cy) / window.innerHeight;
+      orbitalRef.current.style.transform = `perspective(800px) rotateY(${dx * 12}deg) rotateX(${-dy * 8}deg)`;
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
@@ -75,193 +65,444 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative w-full grain-overlay"
-      style={{ height: '100svh', minHeight: '680px', background: 'var(--bg-primary)' }}
+      style={{
+        position: 'relative',
+        zIndex: 1,
+        minHeight: '100svh',
+        paddingTop: '100px',
+        paddingBottom: '60px',
+        display: 'flex',
+        alignItems: 'center',
+        overflow: 'hidden',
+        background: 'transparent',
+      }}
     >
-      {/* 3D Scene Background */}
-      <div className="absolute inset-0 z-0">
-        <Scene mousePosition={mousePosition} />
-      </div>
+      {/* Background elements */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '-20%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '900px',
+          height: '600px',
+          background: 'radial-gradient(ellipse at center, rgba(124,58,237,0.12) 0%, transparent 70%)',
+          pointerEvents: 'none',
+          animation: 'nebula-pulse 6s ease-in-out infinite',
+        }}
+      />
 
-      {/* Radial gradient overlay */}
-      <div className="absolute inset-0 z-[1] pointer-events-none" style={{ background: 'radial-gradient(ellipse 80% 50% at 50% 50%, transparent 30%, rgba(15,23,42,0.7) 100%)' }} />
-      <div className="absolute inset-0 z-[1] pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 60% at 20% 50%, rgba(59,130,246,0.07) 0%, transparent 70%)' }} />
+      {/* Planet arc glow at top */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '-300px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '800px',
+          height: '600px',
+          borderRadius: '50%',
+          border: '2px solid rgba(124,58,237,0.25)',
+          boxShadow: '0 0 60px rgba(124,58,237,0.2), inset 0 0 60px rgba(124,58,237,0.05)',
+          pointerEvents: 'none',
+        }}
+      />
 
-      {/* Content */}
-      <div className="relative z-[2] h-full flex items-center px-6 lg:px-12 xl:px-20">
-        <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center pt-20">
+      {/* Twinkling stars */}
+      {Array.from({ length: 30 }).map((_, i) => (
+        <div
+          key={i}
+          style={{
+            position: 'absolute',
+            width: `${Math.random() * 3 + 1}px`,
+            height: `${Math.random() * 3 + 1}px`,
+            borderRadius: '50%',
+            background: '#fff',
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            animation: `twinkle ${2 + Math.random() * 4}s ease-in-out ${Math.random() * 3}s infinite`,
+            pointerEvents: 'none',
+          }}
+        />
+      ))}
 
-          {/* LEFT — Text */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-            {/* Available badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="mb-5"
-            >
-              <span className="px-4 py-2 rounded-full text-xs font-semibold tracking-widest uppercase text-blue-300 glass neon-border-blue">
-                ✦ Available for Opportunities
-              </span>
-            </motion.div>
-
-            {/* Name */}
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="gradient-text font-bold leading-none mb-3"
-              style={{ fontFamily: 'var(--font-space-grotesk, Space Grotesk, sans-serif)', fontSize: 'clamp(2.8rem, 8vw, 5.5rem)', letterSpacing: '-0.02em' }}
-            >
-              Anush Kulal M
-            </motion.h1>
-
-            {/* Role typewriter */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.7 }}
-              className="mb-5"
-              style={{ fontSize: 'clamp(1rem, 2.5vw, 1.4rem)' }}
-            >
-              <TypewriterText />
-            </motion.div>
-
-            {/* Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-              className="max-w-lg text-slate-400 text-base sm:text-lg mb-8 leading-relaxed"
-            >
-              MCA Student at Jain University, Bengaluru. Crafting exceptional digital experiences
-              through clean design, solid code, and rigorous testing.
-            </motion.p>
-
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.1 }}
-              className="flex flex-col sm:flex-row gap-4"
-            >
-              <button
-                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                className="cursor-pointer px-8 py-3 rounded-xl text-white font-semibold text-sm sm:text-base transition-all duration-300"
-                style={{ background: 'linear-gradient(135deg, #3B82F6, #8B5CF6)', boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)', willChange: 'transform' }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.05) translateY(-2px)';
-                  (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 0 40px rgba(59, 130, 246, 0.8), 0 0 80px rgba(139, 92, 246, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.transform = '';
-                  (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 0 20px rgba(59, 130, 246, 0.5)';
-                }}
-              >
-                View My Work
-              </button>
-              <button
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="cursor-pointer px-8 py-3 rounded-xl text-slate-300 font-semibold text-sm sm:text-base glass neon-border-blue hover:text-white transition-all duration-300"
-                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.05) translateY(-2px)'; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.transform = ''; }}
-              >
-                Get In Touch
-              </button>
-            </motion.div>
+      <div
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '0 40px',
+          width: '100%',
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '60px',
+          alignItems: 'center',
+        }}
+        className="hero-grid"
+      >
+        {/* LEFT: Text content */}
+        <div style={{ animation: 'slide-up 0.8s ease forwards' }}>
+          {/* Available tag */}
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '8px 18px',
+              background: 'rgba(124,58,237,0.1)',
+              border: '1px solid rgba(124,58,237,0.3)',
+              borderRadius: '30px',
+              marginBottom: '28px',
+              fontSize: '0.82rem',
+              color: 'var(--purple-light)',
+              fontFamily: 'var(--font-inter)',
+              fontWeight: 500,
+              backdropFilter: 'blur(10px)',
+            }}
+          >
+            <span style={{ color: '#4ade80', fontSize: '0.7rem' }}>✦</span>
+            MCA Student · Available for Work
           </div>
 
-          {/* RIGHT — Profile Photo */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85, rotateY: 20 }}
-            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-            transition={{ duration: 1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="flex justify-center lg:justify-end"
+          {/* Name */}
+          <h1
+            style={{
+              fontFamily: 'var(--font-space)',
+              fontSize: 'clamp(3.5rem, 8vw, 6.5rem)',
+              fontWeight: 700,
+              lineHeight: 1.05,
+              marginBottom: '16px',
+              color: 'var(--white)',
+            }}
           >
-            <div className="relative">
-              {/* Outer glow ring */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 20, ease: 'linear' }}
-                className="absolute -inset-3 rounded-full"
-                style={{
-                  background: 'conic-gradient(from 0deg, #3B82F6, #8B5CF6, #06B6D4, #3B82F6)',
-                  padding: '2px',
-                  borderRadius: '50%',
-                  opacity: 0.6,
-                  filter: 'blur(4px)',
-                }}
-              />
-              {/* Pulsing glow */}
-              <div
-                className="absolute -inset-6 rounded-full pointer-events-none"
-                style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.2) 0%, rgba(139,92,246,0.1) 50%, transparent 70%)', animation: 'glow-pulse 3s ease-in-out infinite' }}
-              />
+            <span style={{ display: 'block' }}>Anush</span>
+            <span
+              style={{
+                display: 'block',
+                background: 'linear-gradient(135deg, #fff 30%, rgba(167,139,250,0.7) 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
+              Kulal M.
+            </span>
+          </h1>
 
-              {/* Gradient border */}
-              <div
-                className="relative rounded-full p-0.5"
-                style={{ background: 'linear-gradient(135deg, #3B82F6, #8B5CF6, #06B6D4)' }}
-              >
-                {/* Photo */}
-                <div className="w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 rounded-full overflow-hidden relative" style={{ background: 'var(--bg-primary)' }}>
-                  <Image
-                    src="/anush.jpeg"
-                    alt="Anush Kulal M"
-                    fill
-                    className="object-cover object-top scale-110"
-                    priority
-                  />
-                  {/* Holographic sheen */}
+          {/* Typewriter role */}
+          <div
+            style={{
+              fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
+              fontFamily: 'var(--font-space)',
+              fontWeight: 600,
+              marginBottom: '20px',
+              height: '2.2rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '2px',
+            }}
+          >
+            <span
+              style={{
+                background: 'linear-gradient(135deg, #A78BFA, #06B6D4)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
+              {role}
+            </span>
+            <span
+              style={{
+                width: '2px',
+                height: '1.4em',
+                background: 'var(--purple-light)',
+                display: 'inline-block',
+                animation: 'blink-cursor 1s ease-in-out infinite',
+                marginLeft: '2px',
+                borderRadius: '1px',
+              }}
+            />
+          </div>
+
+          {/* Description */}
+          <p
+            style={{
+              color: 'var(--gray)',
+              fontSize: '1rem',
+              lineHeight: 1.75,
+              maxWidth: '500px',
+              marginBottom: '36px',
+              fontFamily: 'var(--font-inter)',
+            }}
+          >
+            MCA student at Jain University with a passion for crafting beautiful interfaces,
+            building seamless user experiences, and leading teams to deliver great products.
+            Bridging design and development with an eye for detail.
+          </p>
+
+          {/* CTA Buttons */}
+          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '48px' }}>
+            <button
+              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              style={{
+                padding: '14px 32px',
+                background: 'linear-gradient(135deg, #7C3AED, #A78BFA)',
+                border: 'none',
+                borderRadius: '12px',
+                color: '#fff',
+                fontFamily: 'var(--font-inter)',
+                fontSize: '0.95rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 0 25px rgba(124,58,237,0.4)',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-3px)';
+                (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 0 40px rgba(124,58,237,0.6)';
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
+                (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 0 25px rgba(124,58,237,0.4)';
+              }}
+            >
+              View My Work →
+            </button>
+            <a
+              href="/resume.pdf"
+              download
+              style={{
+                padding: '14px 32px',
+                background: 'rgba(124,58,237,0.1)',
+                border: '1px solid rgba(124,58,237,0.4)',
+                borderRadius: '12px',
+                color: 'var(--purple-light)',
+                fontFamily: 'var(--font-inter)',
+                fontSize: '0.95rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                textDecoration: 'none',
+                display: 'inline-block',
+                transition: 'all 0.3s ease',
+                backdropFilter: 'blur(10px)',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(124,58,237,0.2)';
+                (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-3px)';
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(124,58,237,0.1)';
+                (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(0)';
+              }}
+            >
+              ↓ Download Resume
+            </a>
+          </div>
+
+          {/* Scroll hint */}
+          <div
+            style={{
+              color: 'var(--gray)',
+              fontSize: '0.82rem',
+              fontFamily: 'var(--font-inter)',
+              animation: 'bounce-hint 2s ease-in-out infinite',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+            }}
+          >
+            <span>Scroll to explore</span>
+            <span>↓</span>
+          </div>
+        </div>
+
+        {/* RIGHT: Orbital skill showcase */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <div
+            ref={orbitalRef}
+            style={{
+              position: 'relative',
+              width: '420px',
+              height: '420px',
+              transition: 'transform 0.1s ease',
+              flexShrink: 0,
+            }}
+          >
+            {/* Outer orbital ring */}
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: '50%',
+                border: '1px dashed rgba(124,58,237,0.4)',
+                animation: 'orbit 25s linear infinite',
+              }}
+            >
+              {/* 8 dots on outer ring */}
+              {Array.from({ length: 8 }).map((_, i) => {
+                const a = (i * 360) / 8;
+                const rad = (a * Math.PI) / 180;
+                const r = 209;
+                const x = 210 + r * Math.cos(rad);
+                const y = 210 + r * Math.sin(rad);
+                return (
                   <div
-                    className="absolute inset-0 rounded-full pointer-events-none"
-                    style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.12) 0%, transparent 40%, rgba(139,92,246,0.12) 100%)' }}
+                    key={i}
+                    style={{
+                      position: 'absolute',
+                      width: '6px',
+                      height: '6px',
+                      borderRadius: '50%',
+                      background: 'var(--purple-light)',
+                      boxShadow: '0 0 8px rgba(167,139,250,0.8)',
+                      left: `${x}px`,
+                      top: `${y}px`,
+                      transform: 'translate(-50%,-50%)',
+                    }}
                   />
-                </div>
-              </div>
-
-              {/* Floating badges */}
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
-                className="absolute -left-6 top-8 glass px-3 py-2 rounded-xl text-xs font-semibold text-blue-300"
-                style={{ border: '1px solid rgba(59,130,246,0.4)', backdropFilter: 'blur(12px)', whiteSpace: 'nowrap' }}
-              >
-                🎨 UI/UX Designer
-              </motion.div>
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut', delay: 0.5 }}
-                className="absolute -right-4 bottom-12 glass px-3 py-2 rounded-xl text-xs font-semibold text-purple-300"
-                style={{ border: '1px solid rgba(139,92,246,0.4)', backdropFilter: 'blur(12px)', whiteSpace: 'nowrap' }}
-              >
-                💻 Developer
-              </motion.div>
-              <motion.div
-                animate={{ y: [0, -6, 0] }}
-                transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut', delay: 1 }}
-                className="absolute -bottom-4 left-1/2 -translate-x-1/2 glass px-3 py-2 rounded-xl text-xs font-semibold text-green-300"
-                style={{ border: '1px solid rgba(16,185,129,0.4)', backdropFilter: 'blur(12px)', whiteSpace: 'nowrap' }}
-              >
-                🧪 QA Engineer
-              </motion.div>
+                );
+              })}
             </div>
-          </motion.div>
 
+            {/* Inner orbital ring */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '60px',
+                left: '60px',
+                right: '60px',
+                bottom: '60px',
+                borderRadius: '50%',
+                border: '1px dashed rgba(167,139,250,0.3)',
+                animation: 'orbit 18s linear infinite reverse',
+              }}
+            />
+
+            {/* Center: Photo */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%,-50%)',
+                width: '130px',
+                height: '130px',
+                borderRadius: '50%',
+                overflow: 'hidden',
+                border: '3px solid rgba(124,58,237,0.6)',
+                boxShadow: '0 0 30px rgba(124,58,237,0.5), 0 0 60px rgba(124,58,237,0.2)',
+                animation: 'glow-pulse 3s ease-in-out infinite',
+                zIndex: 10,
+              }}
+            >
+              <Image
+                src="/anush.jpeg"
+                alt="Anush Kulal M"
+                width={130}
+                height={130}
+                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                priority
+              />
+            </div>
+
+            {/* Orbiting skill icons */}
+            {ORBIT_SKILLS.map((skill, i) => {
+              const rad = (skill.angle * Math.PI) / 180;
+              const radius = 160;
+              const x = 210 + radius * Math.cos(rad);
+              const y = 210 + radius * Math.sin(rad);
+              return (
+                <div
+                  key={i}
+                  style={{
+                    position: 'absolute',
+                    left: `${x}px`,
+                    top: `${y}px`,
+                    transform: 'translate(-50%,-50%)',
+                    zIndex: 5,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '54px',
+                      height: '54px',
+                      background: 'rgba(10,10,26,0.9)',
+                      border: '1px solid rgba(124,58,237,0.4)',
+                      borderRadius: '12px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      backdropFilter: 'blur(10px)',
+                      animation: `glow-pulse ${3 + i * 0.3}s ease-in-out ${i * 0.2}s infinite`,
+                      cursor: 'default',
+                      transition: 'transform 0.2s ease, border-color 0.2s ease',
+                    }}
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.2)';
+                      (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(167,139,250,0.8)';
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLDivElement).style.transform = 'scale(1)';
+                      (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(124,58,237,0.4)';
+                    }}
+                  >
+                    <span style={{ fontSize: '1.4rem', lineHeight: 1 }}>{skill.emoji}</span>
+                    <span
+                      style={{
+                        fontSize: '0.52rem',
+                        color: 'var(--gray)',
+                        fontFamily: 'var(--font-inter)',
+                        marginTop: '3px',
+                        fontWeight: 500,
+                      }}
+                    >
+                      {skill.label}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* Glow orb behind orbital */}
+            <div
+              style={{
+                position: 'absolute',
+                inset: '-40px',
+                borderRadius: '50%',
+                background: 'radial-gradient(ellipse, rgba(124,58,237,0.06) 0%, transparent 70%)',
+                pointerEvents: 'none',
+                animation: 'nebula-pulse 4s ease-in-out infinite',
+              }}
+            />
+          </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.button
-        onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="cursor-pointer absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-500 hover:text-slate-300 transition-colors z-[3]"
-      >
-        <span className="text-xs tracking-widest uppercase font-medium">Scroll to Explore</span>
-        <span className="text-lg animate-bounce-y">↓</span>
-      </motion.button>
+      <style>{`
+        @media (max-width: 900px) {
+          .hero-grid {
+            grid-template-columns: 1fr !important;
+            gap: 50px !important;
+            text-align: center;
+          }
+          .hero-grid > div:last-child {
+            justify-content: center !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .hero-grid > div:last-child > div {
+            width: 320px !important;
+            height: 320px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

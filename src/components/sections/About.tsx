@@ -2,252 +2,339 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import GlassCard from '@/components/ui/GlassCard';
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.15 } },
-};
+const infoRows = [
+  { icon: '📍', label: 'Location', value: 'Bengaluru, Karnataka' },
+  { icon: '📞', label: 'Phone', value: '+91 9480487257' },
+  { icon: '✉️', label: 'Email', value: 'anushkulalm@gmail.com' },
+  { icon: '🗣️', label: 'Languages', value: 'English, Kannada, Hindi' },
+];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 60 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: 'easeOut' as const } },
-};
+const education = [
+  {
+    degree: 'Master of Computer Applications (MCA)',
+    institution: 'Jain (Deemed-to-be University)',
+    period: 'Jul 2024 – Present',
+    cgpa: null,
+    color: '#7C3AED',
+  },
+  {
+    degree: 'Bachelor of Computer Applications (BCA)',
+    institution: 'Jain (Deemed-to-be University)',
+    period: 'Apr 2022',
+    cgpa: '8.2',
+    color: '#06B6D4',
+  },
+];
 
 export default function About() {
   return (
-    <section id="about" className="section-base" style={{ background: 'var(--bg-primary)' }}>
-      {/* Background orbs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div
-          className="absolute rounded-full opacity-20"
-          style={{
-            width: 500, height: 500,
-            background: 'radial-gradient(circle, #3B82F6 0%, transparent 70%)',
-            top: '-10%', left: '-15%',
-            animation: 'orb-move 8s ease-in-out infinite',
-            filter: 'blur(60px)',
-          }}
-        />
-        <div
-          className="absolute rounded-full opacity-15"
-          style={{
-            width: 400, height: 400,
-            background: 'radial-gradient(circle, #8B5CF6 0%, transparent 70%)',
-            bottom: '-10%', right: '-10%',
-            animation: 'orb-move 10s ease-in-out infinite reverse',
-            filter: 'blur(60px)',
-          }}
-        />
-      </div>
-
-      <div className="container-max relative z-10">
-        {/* Section header */}
+    <section
+      id="about"
+      style={{
+        position: 'relative',
+        zIndex: 1,
+        background: 'transparent',
+        padding: '120px 0',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '0 40px',
+        }}
+      >
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
         >
-          <span className="text-xs font-semibold tracking-widest uppercase text-blue-400 mb-3 block">// About Me</span>
-          <h2 className="section-title gradient-text-static" style={{ fontFamily: 'var(--font-space-grotesk, Space Grotesk, sans-serif)' }}>
-            The Person Behind the Code
+          <span className="section-label">// 01. About Me</span>
+          <h2
+            style={{
+              fontFamily: 'var(--font-space)',
+              fontSize: 'clamp(2rem, 4vw, 3rem)',
+              fontWeight: 700,
+              color: 'var(--white)',
+              marginBottom: '60px',
+              lineHeight: 1.2,
+            }}
+          >
+            The Developer{' '}
+            <span
+              style={{
+                background: 'linear-gradient(135deg, #A78BFA, #06B6D4)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
+              Behind The Stars
+            </span>
           </h2>
-          <p className="section-subtitle text-slate-400 mx-auto mt-4">
-            A curious mind that codes, designs, and leads — always chasing the perfect user experience.
-          </p>
         </motion.div>
 
-        {/* Two-col: Photo + Info */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mb-16">
-          {/* Photo card */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1.4fr',
+            gap: '60px',
+            alignItems: 'start',
+          }}
+          className="about-grid"
+        >
+          {/* Photo Column */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="flex justify-center"
+            style={{ position: 'relative' }}
           >
-            <div className="relative">
-              {/* Glow rings */}
-              <div className="absolute inset-0 rounded-3xl" style={{ boxShadow: '0 0 60px rgba(59,130,246,0.3), 0 0 120px rgba(139,92,246,0.15)', transform: 'scale(1.05)' }} />
-              <div className="absolute -inset-1 rounded-3xl" style={{ background: 'linear-gradient(135deg, #3B82F6, #8B5CF6, #06B6D4)', padding: '2px', borderRadius: '24px' }}>
-                <div className="w-full h-full rounded-3xl" style={{ background: 'var(--bg-primary)' }} />
-              </div>
-              <div className="relative w-64 h-72 sm:w-72 sm:h-80 rounded-3xl overflow-hidden" style={{ border: '2px solid rgba(59,130,246,0.4)' }}>
-                <Image
-                  src="/anush.jpeg"
-                  alt="Anush Kulal M"
-                  fill
-                  className="object-cover object-top"
-                  priority
-                />
-                {/* Holographic overlay */}
-                <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.1) 0%, transparent 50%, rgba(139,92,246,0.1) 100%)' }} />
-              </div>
-              {/* Floating badge */}
-              <motion.div
-                animate={{ y: [0, -6, 0] }}
-                transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
-                className="absolute -bottom-4 -right-4 glass px-3 py-2 rounded-xl"
-                style={{ border: '1px solid rgba(59,130,246,0.4)', backdropFilter: 'blur(12px)' }}
-              >
-                <span className="text-xs font-semibold text-blue-300">Available for hire</span>
-                <div className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block ml-2 animate-pulse" />
-              </motion.div>
+            {/* Photo frame */}
+            <div
+              style={{
+                position: 'relative',
+                borderRadius: '20px',
+                overflow: 'hidden',
+                border: '1px solid rgba(124,58,237,0.3)',
+                boxShadow: '0 0 40px rgba(124,58,237,0.15)',
+              }}
+            >
+              {/* Corner accents */}
+              <div style={{
+                position: 'absolute', top: 0, left: 0, width: '30px', height: '30px',
+                borderTop: '3px solid var(--purple-light)', borderLeft: '3px solid var(--purple-light)',
+                borderRadius: '4px 0 0 0', zIndex: 2,
+              }} />
+              <div style={{
+                position: 'absolute', top: 0, right: 0, width: '30px', height: '30px',
+                borderTop: '3px solid var(--purple-light)', borderRight: '3px solid var(--purple-light)',
+                borderRadius: '0 4px 0 0', zIndex: 2,
+              }} />
+              <div style={{
+                position: 'absolute', bottom: 0, left: 0, width: '30px', height: '30px',
+                borderBottom: '3px solid var(--cyan)', borderLeft: '3px solid var(--cyan)',
+                borderRadius: '0 0 0 4px', zIndex: 2,
+              }} />
+              <div style={{
+                position: 'absolute', bottom: 0, right: 0, width: '30px', height: '30px',
+                borderBottom: '3px solid var(--cyan)', borderRight: '3px solid var(--cyan)',
+                borderRadius: '0 0 4px 0', zIndex: 2,
+              }} />
+
+              {/* Scan line overlay */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(124,58,237,0.03) 3px, rgba(124,58,237,0.03) 4px)',
+                  zIndex: 1,
+                  pointerEvents: 'none',
+                }}
+              />
+
+              <Image
+                src="/anush.jpeg"
+                alt="Anush Kulal M"
+                width={420}
+                height={500}
+                style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }}
+              />
+            </div>
+
+            {/* Floating stat badges */}
+            <div
+              style={{
+                position: 'absolute',
+                bottom: '20px',
+                left: '-20px',
+                background: 'rgba(10,10,26,0.95)',
+                border: '1px solid rgba(124,58,237,0.4)',
+                borderRadius: '12px',
+                padding: '10px 16px',
+                backdropFilter: 'blur(10px)',
+                animation: 'float 4s ease-in-out infinite',
+              }}
+            >
+              <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--purple-light)', fontFamily: 'var(--font-space)' }}>3</div>
+              <div style={{ fontSize: '0.72rem', color: 'var(--gray)', fontFamily: 'var(--font-inter)' }}>Internships</div>
+            </div>
+
+            <div
+              style={{
+                position: 'absolute',
+                top: '20px',
+                right: '-20px',
+                background: 'rgba(10,10,26,0.95)',
+                border: '1px solid rgba(6,182,212,0.4)',
+                borderRadius: '12px',
+                padding: '10px 16px',
+                backdropFilter: 'blur(10px)',
+                animation: 'float 4s ease-in-out 2s infinite',
+              }}
+            >
+              <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--cyan)', fontFamily: 'var(--font-space)' }}>8.2</div>
+              <div style={{ fontSize: '0.72rem', color: 'var(--gray)', fontFamily: 'var(--font-inter)' }}>BCA CGPA</div>
             </div>
           </motion.div>
 
-          {/* Info side */}
+          {/* Text Column */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-            className="flex flex-col gap-6"
           >
-            <div>
-              <h3 className="text-2xl font-bold text-white mb-3" style={{ fontFamily: 'var(--font-space-grotesk, Space Grotesk, sans-serif)' }}>
-                Hi, I&apos;m Anush Kulal M
-              </h3>
-              <p className="text-slate-300 leading-relaxed text-base">
-                I am pursuing my MCA at Jain (Deemed-to-be University), Bengaluru. I have a strong
-                foundation in computer science, programming, and software development. I explore
-                different AI tools to enhance my knowledge and productivity, and I thrive at the
-                intersection of beautiful design and robust engineering.
-              </p>
+            {/* Currently pursuing badge */}
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '6px 16px',
+                background: 'rgba(124,58,237,0.1)',
+                border: '1px solid rgba(124,58,237,0.3)',
+                borderRadius: '20px',
+                marginBottom: '24px',
+                fontSize: '0.8rem',
+                color: 'var(--purple-light)',
+                fontFamily: 'var(--font-inter)',
+              }}
+            >
+              <span style={{ color: '#4ade80' }}>●</span>
+              Currently Pursuing MCA at Jain University
             </div>
-            <div className="flex flex-col gap-3">
-              {[
-                { label: 'Location', value: 'Bengaluru, Karnataka', icon: '📍' },
-                { label: 'Phone', value: '+91 9480487257', icon: '📱' },
-                { label: 'Email', value: 'anushkulalm@gmail.com', icon: '✉️' },
-                { label: 'Languages', value: 'English · Hindi · Kannada · Tulu', icon: '🌐' },
-              ].map((item) => (
-                <div key={item.label} className="flex items-center gap-3">
-                  <span className="text-lg">{item.icon}</span>
-                  <div>
-                    <span className="text-xs text-slate-500 uppercase tracking-wide">{item.label}</span>
-                    <p className="text-sm text-slate-200 font-medium">{item.value}</p>
-                  </div>
+
+            {/* Bio */}
+            <p
+              style={{
+                color: 'var(--gray)',
+                fontSize: '1rem',
+                lineHeight: 1.8,
+                marginBottom: '32px',
+                fontFamily: 'var(--font-inter)',
+              }}
+            >
+              I&apos;m a passionate MCA student with a strong foundation in Computer Science, programming,
+              software development, and UI/UX design. With hands-on experience across three internships
+              spanning design, development, and quality assurance, I bring both creative vision and
+              technical execution to every project.
+            </p>
+            <p
+              style={{
+                color: 'var(--gray)',
+                fontSize: '1rem',
+                lineHeight: 1.8,
+                marginBottom: '32px',
+                fontFamily: 'var(--font-inter)',
+              }}
+            >
+              From designing intuitive interfaces in Figma to leading development teams and building
+              full-stack applications with React and Node.js, I thrive where design meets code.
+              Currently exploring AI tools and expanding my backend skills.
+            </p>
+
+            {/* Info rows */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '40px' }}>
+              {infoRows.map((row, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '14px',
+                    padding: '12px 16px',
+                    background: 'rgba(124,58,237,0.05)',
+                    border: '1px solid rgba(124,58,237,0.1)',
+                    borderRadius: '10px',
+                  }}
+                >
+                  <span style={{ fontSize: '1.1rem', flexShrink: 0 }}>{row.icon}</span>
+                  <span style={{ color: 'var(--gray)', fontSize: '0.82rem', fontFamily: 'var(--font-inter)', width: '70px', flexShrink: 0 }}>{row.label}</span>
+                  <span style={{ color: 'var(--white)', fontSize: '0.9rem', fontFamily: 'var(--font-inter)', fontWeight: 500 }}>{row.value}</span>
                 </div>
               ))}
             </div>
           </motion.div>
         </div>
 
-        {/* Education + Career cards */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {/* Education card */}
-          <motion.div variants={cardVariants}>
-            <GlassCard hover3d className="h-full p-6 flex flex-col gap-4 group hover-lift">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0" style={{ background: '#8B5CF620', border: '1px solid #8B5CF640', boxShadow: '0 0 20px #8B5CF620' }}>
-                  🎓
-                </div>
-                <h3 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-space-grotesk, Space Grotesk, sans-serif)' }}>Education</h3>
-              </div>
-              <div className="h-px w-full rounded-full" style={{ background: 'linear-gradient(90deg, #8B5CF660, transparent)' }} />
-              <div className="flex flex-col gap-5 flex-1">
-                <div className="p-3 rounded-xl" style={{ background: 'rgba(139,92,246,0.08)', border: '1px solid rgba(139,92,246,0.15)' }}>
-                  <div className="flex justify-between items-start mb-1">
-                    <p className="text-white font-semibold text-sm leading-tight">Master of Computer Applications</p>
-                    <span className="text-xs text-purple-400 font-bold ml-2 flex-shrink-0">7.8 CGPA</span>
-                  </div>
-                  <p className="text-blue-400 text-xs">Jain (Deemed-to-be University)</p>
-                  <p className="text-slate-500 text-xs mt-1">Jul 2024 – Present</p>
-                </div>
-                <div className="p-3 rounded-xl" style={{ background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.15)' }}>
-                  <div className="flex justify-between items-start mb-1">
-                    <p className="text-white font-semibold text-sm leading-tight">Bachelor of Computer Applications</p>
-                    <span className="text-xs text-blue-400 font-bold ml-2 flex-shrink-0">8.2 CGPA</span>
-                  </div>
-                  <p className="text-blue-400 text-xs">Jain (Deemed-to-be University)</p>
-                  <p className="text-slate-500 text-xs mt-1">Apr 2022</p>
-                </div>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(90deg, transparent, #8B5CF6, transparent)' }} />
-            </GlassCard>
-          </motion.div>
-
-          {/* Career Objective card */}
-          <motion.div variants={cardVariants}>
-            <GlassCard hover3d className="h-full p-6 flex flex-col gap-4 group hover-lift">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0" style={{ background: '#06B6D420', border: '1px solid #06B6D440', boxShadow: '0 0 20px #06B6D420' }}>
-                  🚀
-                </div>
-                <h3 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-space-grotesk, Space Grotesk, sans-serif)' }}>Career Objective</h3>
-              </div>
-              <div className="h-px w-full rounded-full" style={{ background: 'linear-gradient(90deg, #06B6D460, transparent)' }} />
-              <p className="text-slate-300 text-sm leading-relaxed flex-1">
-                Looking for an opportunity to work with a dynamic and robust team where I can learn
-                and grow. I am eager to upskill and stay updated with the latest technological trends
-                while contributing meaningfully to high-impact products through software development,
-                UI/UX design, and quality assurance.
-              </p>
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(90deg, transparent, #06B6D4, transparent)' }} />
-            </GlassCard>
-          </motion.div>
-
-          {/* Quick facts card */}
-          <motion.div variants={cardVariants}>
-            <GlassCard hover3d className="h-full p-6 flex flex-col gap-4 group hover-lift">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0" style={{ background: '#3B82F620', border: '1px solid #3B82F640', boxShadow: '0 0 20px #3B82F620' }}>
-                  ⚡
-                </div>
-                <h3 className="text-xl font-semibold text-white" style={{ fontFamily: 'var(--font-space-grotesk, Space Grotesk, sans-serif)' }}>Quick Facts</h3>
-              </div>
-              <div className="h-px w-full rounded-full" style={{ background: 'linear-gradient(90deg, #3B82F660, transparent)' }} />
-              <ul className="flex flex-col gap-3 flex-1">
-                {[
-                  '3 real-world internships across design, dev & QA',
-                  'UI/UX designs built in Figma & developed in React.js',
-                  'Team Lead experience managing interns at Xthlete India',
-                  'Built full-stack dashboards with AI assistant integration',
-                  'Exploring AI tools to enhance productivity daily',
-                ].map((fact, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
-                    <span className="text-blue-400 mt-0.5 flex-shrink-0">▸</span>
-                    <span>{fact}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(90deg, transparent, #3B82F6, transparent)' }} />
-            </GlassCard>
-          </motion.div>
-        </motion.div>
-
-        {/* Stats row */}
+        {/* Education cards */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: true }}
+          style={{ marginTop: '60px' }}
         >
-          {[
-            { label: 'Internships Completed', value: '3', icon: '💼' },
-            { label: 'Projects Built', value: '5+', icon: '📦' },
-            { label: 'Technologies Used', value: '12+', icon: '⚙️' },
-            { label: 'BCA CGPA', value: '8.2', icon: '🏅' },
-          ].map((stat, i) => (
-            <div key={i} className="glass-card p-5 text-center glass-hover flex flex-col items-center gap-2 cursor-default">
-              <span className="text-2xl">{stat.icon}</span>
-              <p className="text-3xl font-bold gradient-text-static" style={{ fontFamily: 'var(--font-space-grotesk, Space Grotesk, sans-serif)' }}>{stat.value}</p>
-              <p className="text-xs text-slate-400 font-medium">{stat.label}</p>
-            </div>
-          ))}
+          <h3
+            style={{
+              fontFamily: 'var(--font-space)',
+              fontSize: '1.3rem',
+              fontWeight: 600,
+              color: 'var(--white)',
+              marginBottom: '24px',
+            }}
+          >
+            🎓 Education
+          </h3>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '20px',
+            }}
+            className="edu-grid"
+          >
+            {education.map((edu, i) => (
+              <div
+                key={i}
+                className="space-card"
+                style={{
+                  padding: '24px 28px',
+                  borderLeft: `3px solid ${edu.color}`,
+                  borderRadius: '16px',
+                }}
+              >
+                <div style={{ fontSize: '0.75rem', color: edu.color, fontFamily: 'var(--font-inter)', marginBottom: '8px', fontWeight: 600 }}>
+                  {edu.period}
+                </div>
+                <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--white)', fontFamily: 'var(--font-space)', marginBottom: '6px' }}>
+                  {edu.degree}
+                </div>
+                <div style={{ color: 'var(--gray)', fontSize: '0.87rem', fontFamily: 'var(--font-inter)' }}>
+                  {edu.institution}
+                </div>
+                {edu.cgpa && (
+                  <div style={{
+                    marginTop: '12px',
+                    display: 'inline-block',
+                    padding: '4px 12px',
+                    background: `rgba(6,182,212,0.1)`,
+                    border: `1px solid rgba(6,182,212,0.3)`,
+                    borderRadius: '20px',
+                    fontSize: '0.78rem',
+                    color: 'var(--cyan)',
+                    fontFamily: 'var(--font-inter)',
+                    fontWeight: 600,
+                  }}>
+                    CGPA: {edu.cgpa}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </motion.div>
       </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .about-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .edu-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </section>
   );
 }

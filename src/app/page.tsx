@@ -4,19 +4,19 @@ import About from '@/components/sections/About';
 import Skills from '@/components/sections/Skills';
 import Experience from '@/components/sections/Experience';
 import Projects from '@/components/sections/Projects';
-import Achievements from '@/components/sections/Achievements';
 import Contact from '@/components/sections/Contact';
+import SpaceBackgroundClient from '@/components/three/SpaceBackgroundClient';
 
 export default function Home() {
   return (
-    <main className="relative" style={{ background: 'var(--bg-primary)' }}>
+    <main style={{ background: 'transparent', position: 'relative' }}>
+      <SpaceBackgroundClient />
       <NavBar />
       <Hero />
       <About />
       <Skills />
       <Experience />
       <Projects />
-      <Achievements />
       <Contact />
     </main>
   );

@@ -3,117 +3,141 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
-interface Skill {
-  name: string;
-  icon: string;
-  level: number;
-  color: string;
-}
+const techGrid = [
+  { emoji: '🎨', name: 'Figma', level: 90, color: '#A78BFA' },
+  { emoji: '⚛️', name: 'React.js', level: 70, color: '#06B6D4' },
+  { emoji: '🟨', name: 'JavaScript', level: 75, color: '#F59E0B' },
+  { emoji: '🌐', name: 'HTML/CSS', level: 90, color: '#F97316' },
+  { emoji: '☕', name: 'Java', level: 65, color: '#EF4444' },
+  { emoji: '🐍', name: 'Python', level: 50, color: '#84CC16' },
+  { emoji: '🟢', name: 'Node.js', level: 55, color: '#22C55E' },
+  { emoji: '🐙', name: 'Git/GitHub', level: 80, color: '#EC4899' },
+  { emoji: '🗄️', name: 'SQL', level: 65, color: '#3B82F6' },
+  { emoji: '🖌️', name: 'Canva', level: 85, color: '#8B5CF6' },
+  { emoji: 'Ⓒ', name: 'C++/C#', level: 60, color: '#06B6D4' },
+  { emoji: '📱', name: 'UI/UX Design', level: 88, color: '#A78BFA' },
+];
 
-interface SkillGroup {
-  category: string;
-  icon: string;
-  color: string;
-  skills: Skill[];
-}
-
-const skillGroups: SkillGroup[] = [
+const skillBars = [
   {
-    category: 'Programming Languages',
-    icon: '{ }',
-    color: '#3B82F6',
-    skills: [
-      { name: 'Java (OOPs)', icon: '☕', level: 70, color: '#F89820' },
-      { name: 'JavaScript', icon: '⚡', level: 78, color: '#F7DF1E' },
-      { name: 'Python', icon: '🐍', level: 50, color: '#3776AB' },
-      { name: 'C++', icon: '⚙️', level: 60, color: '#00599C' },
-      { name: 'C#', icon: '#️⃣', level: 55, color: '#9B4F96' },
-      { name: 'HTML & CSS', icon: '🌐', level: 85, color: '#E34C26' },
+    category: 'Design',
+    color: '#A78BFA',
+    items: [
+      { name: 'Figma', pct: 90 },
+      { name: 'UI/UX Design', pct: 88 },
+      { name: 'Canva', pct: 85 },
+      { name: 'Prototyping', pct: 80 },
     ],
   },
   {
-    category: 'Frontend & Design',
-    icon: '🎨',
-    color: '#8B5CF6',
-    skills: [
-      { name: 'React.js', icon: '⚛️', level: 75, color: '#61DAFB' },
-      { name: 'Figma', icon: '🎯', level: 85, color: '#F24E1E' },
-      { name: 'Canva', icon: '🖌️', level: 80, color: '#00C4CC' },
-      { name: 'UI/UX Design', icon: '✏️', level: 82, color: '#8B5CF6' },
-    ],
-  },
-  {
-    category: 'Backend & Database',
-    icon: '⚙️',
+    category: 'Frontend',
     color: '#06B6D4',
-    skills: [
-      { name: 'Node.js', icon: '🟢', level: 55, color: '#68A063' },
-      { name: 'SQL', icon: '🗄️', level: 65, color: '#F29111' },
-      { name: 'NoSQL', icon: '🌿', level: 40, color: '#4DB33D' },
-      { name: 'REST APIs', icon: '🔗', level: 72, color: '#FF6B6B' },
+    items: [
+      { name: 'HTML/CSS', pct: 90 },
+      { name: 'JavaScript', pct: 75 },
+      { name: 'React.js', pct: 70 },
     ],
   },
   {
-    category: 'Tools & Technologies',
-    icon: '🛠️',
-    color: '#10B981',
-    skills: [
-      { name: 'Android Studio', icon: '📱', level: 40, color: '#3DDC84' },
-      { name: 'Cisco Packet Tracer', icon: '🌐', level: 45, color: '#1BA0D7' },
-      { name: 'MS Word', icon: '📄', level: 75, color: '#2B579A' },
-      { name: 'Git & GitHub', icon: '🐙', level: 70, color: '#F05032' },
+    category: 'Backend & Tools',
+    color: '#3B82F6',
+    items: [
+      { name: 'Git/GitHub', pct: 80 },
+      { name: 'Node.js', pct: 55 },
+      { name: 'SQL', pct: 65 },
+      { name: 'Java (OOPs)', pct: 65 },
     ],
   },
 ];
 
-function SkillCard({ skill, delay }: { skill: Skill; delay: number }) {
+function TechTile({ emoji, name, level, color, delay }: { emoji: string; name: string; level: number; color: string; delay: number }) {
   const [hovered, setHovered] = useState(false);
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8, y: 20 }}
-      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.4, delay }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay }}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
-      whileHover={{ scale: 1.08, rotateY: 8, rotateX: -4 }}
-      className="glass-card p-4 flex flex-col items-center gap-3 cursor-default group"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       style={{
-        willChange: 'transform',
-        transition: 'box-shadow 0.3s ease',
-        boxShadow: hovered ? `0 10px 30px ${skill.color}30, 0 0 20px ${skill.color}20` : undefined,
-        borderColor: hovered ? `${skill.color}40` : undefined,
+        background: hovered ? `rgba(${parseInt(color.slice(1, 3), 16)},${parseInt(color.slice(3, 5), 16)},${parseInt(color.slice(5, 7), 16)},0.12)` : 'rgba(10,10,26,0.8)',
+        border: `1px solid ${hovered ? color : 'rgba(124,58,237,0.2)'}`,
+        borderRadius: '16px',
+        padding: '20px 12px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '8px',
+        cursor: 'default',
+        transition: 'all 0.3s ease',
+        transform: hovered ? 'translateY(-6px)' : 'translateY(0)',
+        boxShadow: hovered ? `0 10px 30px rgba(${parseInt(color.slice(1, 3), 16)},${parseInt(color.slice(3, 5), 16)},${parseInt(color.slice(5, 7), 16)},0.25)` : 'none',
+        backdropFilter: 'blur(10px)',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
-      <motion.div
-        animate={hovered ? { y: [-2, 2, -2], transition: { repeat: Infinity, duration: 1 } } : { y: 0 }}
-        className="text-3xl w-14 h-14 rounded-xl flex items-center justify-center"
-        style={{
-          background: `${skill.color}15`,
-          border: `1px solid ${skill.color}30`,
-          boxShadow: hovered ? `0 0 20px ${skill.color}40` : 'none',
-          transition: 'box-shadow 0.3s',
-        }}
-      >
-        {skill.icon}
-      </motion.div>
-      <p className="text-sm font-semibold text-slate-200 text-center leading-tight">{skill.name}</p>
-      <div className="w-full">
-        <div className="flex justify-between items-center mb-1">
-          <span className="text-xs text-slate-500">Level</span>
-          <span className="text-xs font-semibold" style={{ color: skill.color }}>{skill.level}%</span>
-        </div>
-        <div className="h-1 w-full rounded-full" style={{ background: 'rgba(255,255,255,0.08)' }}>
-          <motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: `${skill.level}%` }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: delay + 0.3, ease: 'easeOut' }}
-            className="h-full rounded-full"
-            style={{ background: `linear-gradient(90deg, ${skill.color}, ${skill.color}99)` }}
-          />
-        </div>
+      <span style={{ fontSize: '2rem', lineHeight: 1 }}>{emoji}</span>
+      <span style={{ fontSize: '0.8rem', color: hovered ? '#fff' : 'var(--gray)', fontFamily: 'var(--font-inter)', fontWeight: 500, textAlign: 'center' }}>
+        {name}
+      </span>
+      {hovered && (
+        <span style={{
+          fontSize: '0.72rem',
+          color: color,
+          fontWeight: 700,
+          fontFamily: 'var(--font-space)',
+        }}>
+          {level}%
+        </span>
+      )}
+
+      {/* radial glow */}
+      {hovered && (
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: `radial-gradient(ellipse at 50% 0%, ${color}22 0%, transparent 70%)`,
+          pointerEvents: 'none',
+        }} />
+      )}
+    </motion.div>
+  );
+}
+
+function SkillBar({ name, pct, color, delay }: { name: string; pct: number; color: string; delay: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5, delay }}
+      viewport={{ once: true }}
+      style={{ marginBottom: '16px' }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+        <span style={{ fontSize: '0.87rem', color: 'var(--white)', fontFamily: 'var(--font-inter)', fontWeight: 500 }}>{name}</span>
+        <span style={{ fontSize: '0.8rem', color, fontFamily: 'var(--font-inter)', fontWeight: 600 }}>{pct}%</span>
+      </div>
+      <div style={{
+        height: '6px',
+        background: 'rgba(255,255,255,0.06)',
+        borderRadius: '3px',
+        overflow: 'hidden',
+      }}>
+        <motion.div
+          initial={{ width: 0 }}
+          whileInView={{ width: `${pct}%` }}
+          transition={{ duration: 1, delay: delay + 0.2, ease: 'easeOut' }}
+          viewport={{ once: true }}
+          style={{
+            height: '100%',
+            background: `linear-gradient(90deg, ${color}, ${color}99)`,
+            borderRadius: '3px',
+            boxShadow: `0 0 8px ${color}80`,
+          }}
+        />
       </div>
     </motion.div>
   );
@@ -121,74 +145,157 @@ function SkillCard({ skill, delay }: { skill: Skill; delay: number }) {
 
 export default function Skills() {
   return (
-    <section id="skills" className="section-base" style={{ background: 'linear-gradient(180deg, var(--bg-primary) 0%, #0D1B2E 100%)' }}>
-      <div
-        className="absolute inset-0 pointer-events-none opacity-5"
-        style={{
-          backgroundImage: 'linear-gradient(rgba(59,130,246,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.3) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
-        }}
-      />
-      <div className="container-max relative z-10">
+    <section
+      id="skills"
+      style={{
+        position: 'relative',
+        zIndex: 1,
+        background: 'transparent',
+        padding: '120px 0',
+      }}
+    >
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          style={{ marginBottom: '60px' }}
         >
-          <span className="text-xs font-semibold tracking-widest uppercase text-purple-400 mb-3 block">// Skills & Expertise</span>
-          <h2 className="section-title gradient-text-static" style={{ fontFamily: 'var(--font-space-grotesk, Space Grotesk, sans-serif)' }}>
-            My Tech Arsenal
+          <span className="section-label">// 02. Skills</span>
+          <h2
+            style={{
+              fontFamily: 'var(--font-space)',
+              fontSize: 'clamp(2rem, 4vw, 3rem)',
+              fontWeight: 700,
+              color: 'var(--white)',
+              lineHeight: 1.2,
+            }}
+          >
+            Tech Stack &{' '}
+            <span style={{
+              background: 'linear-gradient(135deg, #A78BFA, #06B6D4)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}>
+              Expertise
+            </span>
           </h2>
-          <p className="section-subtitle text-slate-400 mx-auto mt-4">
-            A versatile toolkit spanning development, design, and testing — built for end-to-end product creation.
-          </p>
         </motion.div>
 
-        <div className="flex flex-col gap-12">
-          {skillGroups.map((group, gi) => (
-            <motion.div
-              key={group.category}
-              initial={{ opacity: 0, x: gi % 2 === 0 ? -30 : 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.7 }}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1.2fr 1fr',
+            gap: '60px',
+            alignItems: 'start',
+          }}
+          className="skills-grid"
+        >
+          {/* Tech grid */}
+          <div>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap: '12px',
+              position: 'relative',
+            }}
+            className="tech-tiles-grid"
             >
-              <div className="flex items-center gap-3 mb-6">
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm"
-                  style={{ background: `${group.color}20`, border: `1px solid ${group.color}40`, color: group.color, fontFamily: 'monospace' }}
-                >
-                  {group.icon}
+              {/* Radial center gradient overlay */}
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'radial-gradient(ellipse at 50% 50%, rgba(124,58,237,0.08) 0%, transparent 70%)',
+                pointerEvents: 'none',
+                zIndex: 0,
+              }} />
+              {techGrid.map((tech, i) => (
+                <TechTile key={i} {...tech} delay={i * 0.05} />
+              ))}
+            </div>
+          </div>
+
+          {/* Skill bars */}
+          <div>
+            {skillBars.map((group, gi) => (
+              <div key={gi} style={{ marginBottom: '36px' }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  marginBottom: '16px',
+                }}>
+                  <div style={{
+                    height: '2px',
+                    width: '24px',
+                    background: group.color,
+                    boxShadow: `0 0 8px ${group.color}`,
+                    borderRadius: '2px',
+                  }} />
+                  <span style={{
+                    fontSize: '0.75rem',
+                    color: group.color,
+                    fontFamily: 'var(--font-inter)',
+                    fontWeight: 600,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                  }}>
+                    {group.category}
+                  </span>
                 </div>
-                <h3 className="text-lg font-semibold text-white" style={{ fontFamily: 'var(--font-space-grotesk, Space Grotesk, sans-serif)' }}>
-                  {group.category}
-                </h3>
-                <div className="flex-1 h-px" style={{ background: `linear-gradient(90deg, ${group.color}40, transparent)` }} />
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                {group.skills.map((skill, si) => (
-                  <SkillCard key={skill.name} skill={skill} delay={si * 0.07} />
+                {group.items.map((item, ii) => (
+                  <SkillBar key={ii} name={item.name} pct={item.pct} color={group.color} delay={gi * 0.1 + ii * 0.08} />
                 ))}
               </div>
-            </motion.div>
-          ))}
-        </div>
+            ))}
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="text-center text-slate-500 text-sm mt-12"
-        >
-          Always learning · Currently pursuing{' '}
-          <span className="text-blue-400">Python</span>,{' '}
-          <span className="text-purple-400">NoSQL</span>,{' '}
-          <span className="text-cyan-400">Android Studio</span>
-        </motion.p>
+            {/* Soft skills */}
+            <div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                marginBottom: '16px',
+              }}>
+                <div style={{
+                  height: '2px',
+                  width: '24px',
+                  background: '#F59E0B',
+                  borderRadius: '2px',
+                  boxShadow: '0 0 8px #F59E0B80',
+                }} />
+                <span style={{
+                  fontSize: '0.75rem',
+                  color: '#F59E0B',
+                  fontFamily: 'var(--font-inter)',
+                  fontWeight: 600,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                }}>
+                  Soft Skills
+                </span>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                {['Team Leadership', 'Communication', 'Problem Solving', 'Time Management', 'QA & Testing', 'Collaboration'].map((s, i) => (
+                  <span key={i} className="tech-badge">{s}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .skills-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .tech-tiles-grid { grid-template-columns: repeat(3, 1fr) !important; }
+        }
+        @media (max-width: 480px) {
+          .tech-tiles-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+      `}</style>
     </section>
   );
 }

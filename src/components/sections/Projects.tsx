@@ -1,277 +1,421 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
-interface Project {
-  title: string;
-  description: string;
-  longDescription: string;
-  techStack: string[];
-  githubUrl: string;
-  liveUrl: string;
-  icon: string;
-  color: string;
-  accentColor: string;
-  codeSnippet: string;
-  category: string;
-}
-
-const projects: Project[] = [
+const projects = [
   {
+    id: 1,
+    category: 'Full Stack',
+    icon: '🖥️',
     title: 'Account Manager Dashboard',
-    description: 'AI-powered customer management dashboard with interactive data views',
-    longDescription:
-      'Built a full-stack Account Manager Dashboard for managing and analyzing customer data. Frontend developed with React.js for an interactive and responsive UI. Backend built using Node.js serving structured data. Enabled the account manager to interact with an AI assistant within the dashboard for customer suggestions and insights.',
-    techStack: ['React.js', 'Node.js', 'JavaScript', 'CSS', 'REST APIs', 'AI Assistant'],
-    githubUrl: 'https://github.com/anushkulal',
-    liveUrl: '#',
-    icon: '📊',
-    color: '#3B82F6',
-    accentColor: '#60A5FA',
-    category: 'Full-Stack',
-    codeSnippet: `const fetchCustomer = async (id) => {
-  const res = await api.get(\`/customers/\${id}\`);
-  return { ...res.data, aiSuggestions:
-    await getAISuggestions(res.data) };
-}`,
+    description:
+      'A feature-rich account management dashboard with an integrated AI assistant. Built with React.js frontend, Node.js backend, and AI-powered insights for enhanced productivity.',
+    tech: ['React.js', 'Node.js', 'AI Integration', 'REST APIs', 'CSS Modules'],
+    featured: true,
+    color: '#A78BFA',
+    codeSnippet: `const dashboard = {
+  users: await fetchAccounts(),
+  ai: new AIAssistant({ model: 'gpt-4' }),
+  analytics: initCharts(data),
+};
+
+dashboard.ai.on('query', async (q) => {
+  const context = await dashboard
+    .users.getContext();
+  return ai.respond(q, context);
+});`,
   },
   {
-    title: 'VPN Mobile App (Mockup)',
-    description: 'Premium UI/UX mobile app mockup with interactive prototyping in Figma',
-    longDescription:
-      'Designed a complete mobile application mockup inspired by VPN apps. Created the entire frontend UI in Figma with a modern, intuitive layout. Included interactive prototyping to simulate real app navigation and functionality. Showcased features like viewing multiple servers, selecting a server, and connecting to it — focused entirely on UI/UX design with no backend development.',
-    techStack: ['Figma', 'UI/UX Design', 'Prototyping', 'Interactive Design', 'Mobile Design'],
-    githubUrl: 'https://github.com/anushkulal',
-    liveUrl: '#',
-    icon: '🔐',
-    color: '#8B5CF6',
-    accentColor: '#A78BFA',
+    id: 2,
     category: 'UI/UX Design',
-    codeSnippet: `// Figma Auto-Layout Components
-Frame: VPN_Server_Card
-  ├─ Server_Icon (32×32)
-  ├─ Server_Name (Bold/16)
-  ├─ Server_Location (Regular/12)
-  └─ Connect_Button (CTA/Blue)`,
-  },
-  {
-    title: 'Talisma Customer Dashboard',
-    description: 'Customer dashboard UI built during Talisma internship — Figma to React',
-    longDescription:
-      'Designed and developed a customer dashboard UI for Talisma during my 2-month internship. First designed the complete UI in Figma ensuring a clean, user-friendly layout. Then developed it using React.js for dynamic and responsive rendering. Displays detailed customer data including profile information, activities, and metrics — powered by simulated API data.',
-    techStack: ['Figma', 'React.js', 'JavaScript', 'CSS', 'Static APIs', 'Responsive Design'],
-    githubUrl: 'https://github.com/anushkulal',
-    liveUrl: '#',
-    icon: '🏢',
+    icon: '📱',
+    title: 'VPN Mobile App',
+    description:
+      'Interactive Figma prototype for a VPN mobile app featuring a clean, modern UI with server selection, connection status, and settings screens.',
+    tech: ['Figma', 'UI/UX', 'Prototyping', 'Mobile Design'],
+    featured: false,
     color: '#06B6D4',
-    accentColor: '#22D3EE',
-    category: 'Internship Project',
-    codeSnippet: `const CustomerDashboard = ({ customerId }) => {
-  const [data] = useState(customers[customerId]);
-  return (
-    <Dashboard>
-      <ProfileCard data={data.profile} />
-      <ActivityFeed items={data.activities} />
-    </Dashboard>
-  );
-}`,
+    codeSnippet: null,
   },
   {
-    title: 'Fun Club Platform Prototype',
-    description: 'Activity platform prototype built during Reg Vectors internship with QA',
-    longDescription:
-      'Built a working prototype of a fun club platform as part of a 3-month internship at Reg Vectors. The platform showcases various activities like sports, dance, music, and instruments. Also performed comprehensive QA work on the project — created and documented test cases for validating features and detecting issues across the platform.',
-    techStack: ['UI/UX Design', 'Figma', 'Manual Testing', 'QA Documentation', 'Test Cases'],
-    githubUrl: 'https://github.com/anushkulal',
-    liveUrl: '#',
+    id: 3,
+    category: 'Design → Dev',
+    icon: '📊',
+    title: 'Talisma Customer Dashboard',
+    description:
+      'End-to-end build from Figma design to React.js implementation. Customer data dashboard with dynamic rendering and static API integration.',
+    tech: ['Figma', 'React.js', 'JavaScript', 'APIs'],
+    featured: false,
+    color: '#3B82F6',
+    codeSnippet: null,
+  },
+  {
+    id: 4,
+    category: 'Prototype + QA',
     icon: '🎭',
-    color: '#10B981',
-    accentColor: '#34D399',
-    category: 'Design + QA',
-    codeSnippet: `// Test Case: TC_001 - Activity Browse
-Given: User is on /activities page
-When: User clicks "Sports" category
-Then: Sports activities display
-  AND: Filter shows "Sports" active
-  AND: Count badge updates correctly`,
+    title: 'Fun Club Platform',
+    description:
+      'Interactive prototype of a multi-activity platform (sports, dance, music) with full QA documentation including test cases and bug reports.',
+    tech: ['Figma', 'Prototyping', 'QA', 'Test Cases'],
+    featured: false,
+    color: '#F59E0B',
+    codeSnippet: null,
   },
 ];
 
-function CodeSnippetBg({ code }: { code: string }) {
-  const lines = code.split('\n');
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ opacity: 0.07, fontFamily: 'monospace', fontSize: '9px' }}>
-      {Array.from({ length: 6 }, (_, row) =>
-        lines.map((line, i) => (
-          <div
-            key={`${row}-${i}`}
-            className="whitespace-pre text-blue-300"
-            style={{ transform: `translateY(${row * lines.length * 14 + i * 14}px)`, animation: `slide-up ${3 + row * 0.5}s linear infinite` }}
-          >
-            {line}
-          </div>
-        ))
-      )}
-    </div>
-  );
-}
-
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+function FeaturedCard({ project }: { project: typeof projects[0] }) {
   const [hovered, setHovered] = useState(false);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
-      className="relative group cursor-default"
-      style={{ willChange: 'transform' }}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        gridColumn: '1 / -1',
+        background: 'rgba(10,10,26,0.9)',
+        border: `1px solid ${hovered ? project.color + '80' : 'rgba(124,58,237,0.2)'}`,
+        borderRadius: '20px',
+        padding: '40px',
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gap: '40px',
+        alignItems: 'center',
+        transition: 'all 0.3s ease',
+        boxShadow: hovered ? `0 0 50px ${project.color}20` : 'none',
+        backdropFilter: 'blur(20px)',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+      className="featured-card-inner"
     >
-      <motion.div
-        animate={{ y: hovered ? -8 : 0 }}
-        transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="glass-card overflow-hidden h-full flex flex-col"
-        style={{
-          boxShadow: hovered ? `0 20px 60px ${project.color}30, 0 0 40px ${project.color}15` : '0 4px 20px rgba(0,0,0,0.2)',
-          borderColor: hovered ? `${project.color}40` : undefined,
-          transition: 'box-shadow 0.3s ease, border-color 0.3s ease',
-        }}
-      >
-        <CodeSnippetBg code={project.codeSnippet} />
-        <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${project.color}, ${project.accentColor})` }} />
+      {/* Grid pattern background */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: `linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px)`,
+        backgroundSize: '40px 40px',
+        pointerEvents: 'none',
+      }} />
 
-        <div className="p-6 flex flex-col gap-4 flex-1 relative z-10">
-          <div className="flex items-start justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
-                style={{ background: `${project.color}20`, border: `1px solid ${project.color}40` }}
-              >
-                {project.icon}
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-white leading-tight" style={{ fontFamily: 'var(--font-space-grotesk, Space Grotesk, sans-serif)' }}>
-                  {project.title}
-                </h3>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background: `${project.color}20`, color: project.accentColor, border: `1px solid ${project.color}30` }}>
-                  {project.category}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex-1">
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={hovered ? 'long' : 'short'}
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -5 }}
-                transition={{ duration: 0.2 }}
-                className="text-slate-300 text-sm leading-relaxed"
-              >
-                {hovered ? project.longDescription : project.description}
-              </motion.p>
-            </AnimatePresence>
-          </div>
-
-          <div className="flex flex-wrap gap-2">
-            {project.techStack.map((tech) => (
-              <span key={tech} className="tech-badge">{tech}</span>
-            ))}
-          </div>
-
-          <div className="flex gap-3 mt-auto pt-2 border-t border-white/5">
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cursor-pointer flex-1 py-2.5 rounded-lg text-sm font-semibold text-center glass neon-border-blue text-slate-300 hover:text-white transition-all duration-200"
-              onClick={(e) => e.stopPropagation()}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.borderColor = project.color;
-                (e.currentTarget as HTMLAnchorElement).style.boxShadow = `0 0 15px ${project.color}40`;
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.borderColor = '';
-                (e.currentTarget as HTMLAnchorElement).style.boxShadow = '';
-              }}
-            >
-              GitHub
-            </a>
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cursor-pointer flex-1 py-2.5 rounded-lg text-sm font-semibold text-center text-white transition-all duration-200"
-              style={{ background: `linear-gradient(135deg, ${project.color}, ${project.accentColor})` }}
-              onClick={(e) => e.stopPropagation()}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.boxShadow = `0 0 25px ${project.color}80`;
-                (e.currentTarget as HTMLAnchorElement).style.transform = 'scale(1.02)';
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.boxShadow = '';
-                (e.currentTarget as HTMLAnchorElement).style.transform = '';
-              }}
-            >
-              View Details
-            </a>
-          </div>
+      {/* Left: info */}
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+          <span style={{ fontSize: '1.5rem' }}>{project.icon}</span>
+          <span style={{
+            padding: '4px 12px',
+            background: `${project.color}20`,
+            border: `1px solid ${project.color}50`,
+            borderRadius: '20px',
+            fontSize: '0.75rem',
+            color: project.color,
+            fontFamily: 'var(--font-inter)',
+            fontWeight: 600,
+          }}>
+            {project.category}
+          </span>
+          <span style={{
+            padding: '4px 12px',
+            background: 'rgba(167,139,250,0.1)',
+            border: '1px solid rgba(167,139,250,0.3)',
+            borderRadius: '20px',
+            fontSize: '0.7rem',
+            color: 'var(--purple-light)',
+            fontFamily: 'var(--font-inter)',
+          }}>
+            ⭐ Featured
+          </span>
         </div>
-      </motion.div>
+
+        <h3 style={{
+          fontFamily: 'var(--font-space)',
+          fontSize: '1.8rem',
+          fontWeight: 700,
+          color: 'var(--white)',
+          marginBottom: '14px',
+          lineHeight: 1.2,
+        }}>
+          {project.title}
+        </h3>
+
+        <p style={{
+          color: 'var(--gray)',
+          fontSize: '0.95rem',
+          lineHeight: 1.75,
+          marginBottom: '24px',
+          fontFamily: 'var(--font-inter)',
+        }}>
+          {project.description}
+        </p>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '28px' }}>
+          {project.tech.map((t, i) => (
+            <span key={i} className="tech-badge">{t}</span>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', gap: '12px' }}>
+          <button
+            style={{
+              padding: '10px 22px',
+              background: `linear-gradient(135deg, ${project.color}, ${project.color}aa)`,
+              border: 'none',
+              borderRadius: '10px',
+              color: '#fff',
+              fontFamily: 'var(--font-inter)',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-2px)'; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)'; }}
+          >
+            View Project
+          </button>
+        </div>
+      </div>
+
+      {/* Right: code snippet */}
+      <div style={{
+        background: 'rgba(0,0,0,0.5)',
+        border: '1px solid rgba(124,58,237,0.2)',
+        borderRadius: '12px',
+        padding: '24px',
+        position: 'relative',
+        zIndex: 1,
+        overflow: 'hidden',
+      }}>
+        <div style={{ display: 'flex', gap: '6px', marginBottom: '16px' }}>
+          {['#ff5f57', '#febc2e', '#28c840'].map((c, i) => (
+            <div key={i} style={{ width: '10px', height: '10px', borderRadius: '50%', background: c }} />
+          ))}
+        </div>
+        <pre style={{
+          fontFamily: 'Courier New, monospace',
+          fontSize: '0.78rem',
+          color: 'var(--gray)',
+          lineHeight: 1.7,
+          overflowX: 'auto',
+          whiteSpace: 'pre-wrap',
+        }}>
+          <code>{project.codeSnippet}</code>
+        </pre>
+
+        {/* Animated code stream lines */}
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div
+            key={i}
+            style={{
+              position: 'absolute',
+              bottom: `${20 + i * 20}px`,
+              left: '0',
+              height: '1px',
+              width: '100%',
+              background: `linear-gradient(90deg, transparent, ${project.color}40, transparent)`,
+              animation: `shimmer ${2 + i * 0.5}s ease-in-out ${i * 0.3}s infinite`,
+              backgroundSize: '200% 100%',
+            }}
+          />
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+function ProjectCard({ project, delay }: { project: typeof projects[0]; delay: number }) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay }}
+      viewport={{ once: true }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: 'rgba(10,10,26,0.85)',
+        border: `1px solid ${hovered ? project.color + '70' : 'rgba(124,58,237,0.2)'}`,
+        borderRadius: '16px',
+        padding: '28px',
+        transition: 'all 0.3s ease',
+        transform: hovered ? 'translateY(-6px)' : 'translateY(0)',
+        boxShadow: hovered ? `0 20px 40px ${project.color}20` : 'none',
+        backdropFilter: 'blur(20px)',
+        position: 'relative',
+        overflow: 'hidden',
+        cursor: 'default',
+      }}
+    >
+      {/* Grid background */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: `linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px)`,
+        backgroundSize: '30px 30px',
+        pointerEvents: 'none',
+      }} />
+
+      {/* Top accent line */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: '2px',
+        background: `linear-gradient(90deg, transparent, ${project.color}, transparent)`,
+        opacity: hovered ? 1 : 0,
+        transition: 'opacity 0.3s ease',
+      }} />
+
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
+          <span style={{ fontSize: '1.3rem' }}>{project.icon}</span>
+          <span style={{
+            padding: '3px 10px',
+            background: `${project.color}20`,
+            border: `1px solid ${project.color}50`,
+            borderRadius: '20px',
+            fontSize: '0.7rem',
+            color: project.color,
+            fontFamily: 'var(--font-inter)',
+            fontWeight: 600,
+          }}>
+            {project.category}
+          </span>
+        </div>
+
+        <h3 style={{
+          fontFamily: 'var(--font-space)',
+          fontSize: '1.1rem',
+          fontWeight: 700,
+          color: 'var(--white)',
+          marginBottom: '10px',
+          lineHeight: 1.3,
+        }}>
+          {project.title}
+        </h3>
+
+        <p style={{
+          color: 'var(--gray)',
+          fontSize: '0.85rem',
+          lineHeight: 1.7,
+          marginBottom: '18px',
+          fontFamily: 'var(--font-inter)',
+        }}>
+          {project.description}
+        </p>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
+          {project.tech.map((t, i) => (
+            <span key={i} style={{
+              padding: '3px 10px',
+              background: 'rgba(124,58,237,0.08)',
+              border: '1px solid rgba(124,58,237,0.2)',
+              borderRadius: '20px',
+              fontSize: '0.7rem',
+              color: 'var(--gray)',
+              fontFamily: 'var(--font-inter)',
+            }}>
+              {t}
+            </span>
+          ))}
+        </div>
+
+        <button
+          style={{
+            padding: '8px 18px',
+            background: 'none',
+            border: `1px solid ${project.color}60`,
+            borderRadius: '8px',
+            color: project.color,
+            fontFamily: 'var(--font-inter)',
+            fontSize: '0.8rem',
+            fontWeight: 600,
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLButtonElement).style.background = `${project.color}20`;
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLButtonElement).style.background = 'none';
+          }}
+        >
+          View Details →
+        </button>
+      </div>
     </motion.div>
   );
 }
 
 export default function Projects() {
+  const [featured, ...rest] = projects;
+
   return (
-    <section id="projects" className="section-base" style={{ background: 'linear-gradient(180deg, #0D1B2E 0%, var(--bg-primary) 100%)' }}>
-      <div className="container-max relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
-        >
-          <span className="text-xs font-semibold tracking-widest uppercase text-blue-400 mb-3 block">// Featured Projects</span>
-          <h2 className="section-title gradient-text-static" style={{ fontFamily: 'var(--font-space-grotesk, Space Grotesk, sans-serif)' }}>
-            Things I&apos;ve Built
-          </h2>
-          <p className="section-subtitle text-slate-400 mx-auto mt-4">
-            Real projects from internships and personal work — spanning UI/UX design, full-stack development, and quality assurance.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {projects.map((project, i) => (
-            <ProjectCard key={project.title} project={project} index={i} />
-          ))}
-        </div>
-
+    <section
+      id="projects"
+      style={{
+        position: 'relative',
+        zIndex: 1,
+        background: 'transparent',
+        padding: '120px 0',
+      }}
+    >
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 40px' }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12"
+          style={{ marginBottom: '60px' }}
         >
-          <a
-            href="https://github.com/anushkulal"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cursor-pointer inline-flex items-center gap-2 px-8 py-3 rounded-xl glass neon-border-blue text-slate-300 hover:text-white transition-all duration-300 font-semibold hover-lift"
+          <span className="section-label">// 04. Projects</span>
+          <h2
+            style={{
+              fontFamily: 'var(--font-space)',
+              fontSize: 'clamp(2rem, 4vw, 3rem)',
+              fontWeight: 700,
+              color: 'var(--white)',
+              lineHeight: 1.2,
+            }}
           >
-            <span>🐙</span>
-            View All on GitHub
-          </a>
+            Things I&apos;ve{' '}
+            <span style={{
+              background: 'linear-gradient(135deg, #A78BFA, #06B6D4)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}>
+              Built
+            </span>
+          </h2>
         </motion.div>
+
+        {/* Bento grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr 1fr',
+          gap: '20px',
+        }} className="projects-bento">
+          <FeaturedCard project={featured} />
+          {rest.map((project, i) => (
+            <ProjectCard key={project.id} project={project} delay={i * 0.1} />
+          ))}
+        </div>
       </div>
+
+      <style>{`
+        @media (max-width: 900px) {
+          .projects-bento { grid-template-columns: 1fr !important; }
+          .featured-card-inner { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </section>
   );
 }
