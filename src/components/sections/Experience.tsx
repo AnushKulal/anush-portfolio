@@ -5,6 +5,21 @@ import { motion } from 'framer-motion';
 const missions = [
   {
     id: '01',
+    company: 'Skypoint',
+    role: 'QA Engineer (Intern)',
+    period: 'Current',
+    color: '#4ade80',
+    gradient: 'linear-gradient(135deg, rgba(74,222,128,0.15), rgba(74,222,128,0.05))',
+    achievements: [
+      'Writing and executing detailed test cases to validate features across the platform',
+      'Performing manual QA testing and logging defects with clear reproduction steps',
+      'Tracking bugs through to resolution and verifying fixes before each release',
+      'Collaborating closely with developers to uphold quality standards on every build',
+    ],
+    tech: ['Manual Testing', 'Test Cases', 'Bug Reporting', 'QA'],
+  },
+  {
+    id: '02',
     company: 'Xthlete India',
     role: 'UI/UX Designer → Team Lead',
     period: 'Internship',
@@ -19,7 +34,7 @@ const missions = [
     tech: ['Figma', 'Team Leadership', 'UI/UX Design', 'Project Management'],
   },
   {
-    id: '02',
+    id: '03',
     company: 'Talisma',
     role: 'UI/UX Designer & Frontend Developer',
     period: '2 Months',
@@ -34,7 +49,7 @@ const missions = [
     tech: ['Figma', 'React.js', 'JavaScript', 'REST APIs', 'CSS'],
   },
   {
-    id: '03',
+    id: '04',
     company: 'Reg Vectors',
     role: 'UI/UX Designer & QA Engineer',
     period: '3 Months',
@@ -109,6 +124,7 @@ export default function Experience() {
           {missions.map((mission, i) => (
             <motion.div
               key={i}
+              className="mission-item"
               initial={{ opacity: 0, x: -30, rotateY: 15 }}
               whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
               transition={{ duration: 0.7, delay: i * 0.15 }}
@@ -137,7 +153,7 @@ export default function Experience() {
 
               {/* Mission card */}
               <div
-                className="space-card hover-lift"
+                className="space-card hover-lift mission-card"
                 style={{
                   padding: '28px 32px',
                   background: mission.gradient,
@@ -244,6 +260,13 @@ export default function Experience() {
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 480px) {
+          .mission-item { padding-left: 48px !important; }
+          .mission-card { padding: 20px 18px !important; }
+        }
+      `}</style>
     </section>
   );
 }

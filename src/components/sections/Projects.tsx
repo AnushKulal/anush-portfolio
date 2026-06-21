@@ -412,8 +412,14 @@ export default function Projects() {
 
       <style>{`
         @media (max-width: 900px) {
-          .projects-bento { grid-template-columns: 1fr !important; }
+          .projects-bento { grid-template-columns: 1fr 1fr !important; }
           .featured-card-inner { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 600px) {
+          .projects-bento { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .featured-card-inner { padding: 24px !important; }
         }
       `}</style>
     </section>

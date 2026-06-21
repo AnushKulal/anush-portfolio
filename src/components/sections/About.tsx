@@ -14,8 +14,8 @@ const education = [
   {
     degree: 'Master of Computer Applications (MCA)',
     institution: 'Jain (Deemed-to-be University)',
-    period: 'Jul 2024 – Present',
-    cgpa: null,
+    period: 'Jul 2024 – 2026',
+    cgpa: '7.8',
     color: '#7C3AED',
   },
   {
@@ -141,12 +141,14 @@ export default function About() {
                 alt="Anush Kulal M"
                 width={420}
                 height={500}
-                style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }}
+                unoptimized
+                style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover', objectPosition: 'center 15%' }}
               />
             </div>
 
             {/* Floating stat badges */}
             <div
+              className="about-badge-l"
               style={{
                 position: 'absolute',
                 bottom: '20px',
@@ -164,6 +166,7 @@ export default function About() {
             </div>
 
             <div
+              className="about-badge-r"
               style={{
                 position: 'absolute',
                 top: '20px',
@@ -188,7 +191,7 @@ export default function About() {
             transition={{ duration: 0.7, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            {/* Currently pursuing badge */}
+            {/* Current role badge */}
             <div
               style={{
                 display: 'inline-flex',
@@ -205,7 +208,7 @@ export default function About() {
               }}
             >
               <span style={{ color: '#4ade80' }}>●</span>
-              Currently Pursuing MCA at Jain University
+              QA Engineer (Intern) at Skypoint, Bengaluru
             </div>
 
             {/* Bio */}
@@ -218,8 +221,9 @@ export default function About() {
                 fontFamily: 'var(--font-inter)',
               }}
             >
-              I&apos;m a passionate MCA student with a strong foundation in Computer Science, programming,
-              software development, and UI/UX design. With hands-on experience across three internships
+              I&apos;m a passionate MCA graduate with a strong foundation in Computer Science, programming,
+              software development, and UI/UX design. Currently working as a QA Engineer (Intern) at
+              Skypoint in Bengaluru, and with hands-on experience across three prior internships
               spanning design, development, and quality assurance, I bring both creative vision and
               technical execution to every project.
             </p>
@@ -234,7 +238,8 @@ export default function About() {
             >
               From designing intuitive interfaces in Figma to leading development teams and building
               full-stack applications with React and Node.js, I thrive where design meets code.
-              Currently exploring AI tools and expanding my backend skills.
+              Now sharpening my quality-assurance craft as a QA Engineer at Skypoint while continuing
+              to explore AI tools and expand my backend skills.
             </p>
 
             {/* Info rows */}
@@ -333,6 +338,10 @@ export default function About() {
         @media (max-width: 900px) {
           .about-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
           .edu-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .about-badge-l { left: 4px !important; }
+          .about-badge-r { right: 4px !important; }
         }
       `}</style>
     </section>

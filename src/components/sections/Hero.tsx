@@ -1,20 +1,9 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
-import Avatar3D from '@/components/three/Avatar3D';
+import { useEffect, useState } from 'react';
+import SplineRobot from '@/components/three/SplineRobot';
 
-const ROLES = ['UI/UX Designer', 'Frontend Developer', 'QA Engineer', 'Team Leader'];
-
-const ORBIT_SKILLS = [
-  { emoji: '🎨', label: 'Figma', angle: 0 },
-  { emoji: '⚛️', label: 'React', angle: 45 },
-  { emoji: '🟨', label: 'JavaScript', angle: 90 },
-  { emoji: '🟢', label: 'Node.js', angle: 135 },
-  { emoji: '🐍', label: 'Python', angle: 180 },
-  { emoji: '☕', label: 'Java', angle: 225 },
-  { emoji: '🖌️', label: 'Canva', angle: 270 },
-  { emoji: '🐙', label: 'Git', angle: 315 },
-];
+const ROLES = ['QA Engineer', 'UI/UX Designer', 'Frontend Developer', 'Team Leader'];
 
 function useTypewriter(texts: string[], speed = 80, pause = 2000) {
   const [display, setDisplay] = useState('');
@@ -45,22 +34,7 @@ function useTypewriter(texts: string[], speed = 80, pause = 2000) {
 }
 
 export default function Hero() {
-  const orbitalRef = useRef<HTMLDivElement>(null);
   const role = useTypewriter(ROLES);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!orbitalRef.current) return;
-      const rect = orbitalRef.current.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) / window.innerWidth;
-      const dy = (e.clientY - cy) / window.innerHeight;
-      orbitalRef.current.style.transform = `perspective(800px) rotateY(${dx * 12}deg) rotateX(${-dy * 8}deg)`;
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
 
   return (
     <section
@@ -77,14 +51,14 @@ export default function Hero() {
         background: 'transparent',
       }}
     >
-      {/* Background elements */}
+      {/* Background nebula glow */}
       <div
         style={{
           position: 'absolute',
           top: '-20%',
           left: '50%',
           transform: 'translateX(-50%)',
-          width: '900px',
+          width: 'min(900px, 140vw)',
           height: '600px',
           background: 'radial-gradient(ellipse at center, rgba(124,58,237,0.12) 0%, transparent 70%)',
           pointerEvents: 'none',
@@ -107,7 +81,7 @@ export default function Hero() {
       >
         {/* LEFT: Text content */}
         <div style={{ animation: 'slide-up 0.8s ease forwards' }}>
-          {/* Available tag */}
+          {/* Status tag */}
           <div
             style={{
               display: 'inline-flex',
@@ -126,14 +100,14 @@ export default function Hero() {
             }}
           >
             <span style={{ color: '#4ade80', fontSize: '0.7rem' }}>✦</span>
-            MCA Student · Available for Work
+            QA Engineer @ Skypoint · MCA Graduate
           </div>
 
           {/* Name */}
           <h1
             style={{
               fontFamily: 'var(--font-space)',
-              fontSize: 'clamp(3.5rem, 8vw, 6.5rem)',
+              fontSize: 'clamp(2.25rem, 11vw, 6.5rem)',
               fontWeight: 700,
               lineHeight: 1.05,
               marginBottom: '16px',
@@ -157,7 +131,7 @@ export default function Hero() {
           {/* Typewriter role */}
           <div
             style={{
-              fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
+              fontSize: 'clamp(1.1rem, 2.5vw, 1.6rem)',
               fontFamily: 'var(--font-space)',
               fontWeight: 600,
               marginBottom: '20px',
@@ -166,6 +140,7 @@ export default function Hero() {
               alignItems: 'center',
               gap: '2px',
             }}
+            className="hero-role"
           >
             <span
               style={{
@@ -192,22 +167,24 @@ export default function Hero() {
 
           {/* Description */}
           <p
+            className="hero-desc"
             style={{
               color: 'var(--gray)',
-              fontSize: '1rem',
+              fontSize: 'clamp(0.9rem, 3.5vw, 1rem)',
               lineHeight: 1.75,
               maxWidth: '500px',
               marginBottom: '36px',
               fontFamily: 'var(--font-inter)',
             }}
           >
-            MCA student at Jain University with a passion for crafting beautiful interfaces,
-            building seamless user experiences, and leading teams to deliver great products.
-            Bridging design and development with an eye for detail.
+            MCA graduate from Jain University, currently working as a QA Engineer (Intern) at
+            Skypoint in Bengaluru. I have a passion for crafting beautiful interfaces, building
+            seamless user experiences, and leading teams to deliver great products — bridging
+            design and development with an eye for detail.
           </p>
 
           {/* CTA Buttons */}
-          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '48px' }}>
+          <div className="hero-cta" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '48px' }}>
             <button
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
               style={{
@@ -251,6 +228,7 @@ export default function Hero() {
                 display: 'inline-block',
                 transition: 'all 0.3s ease',
                 backdropFilter: 'blur(10px)',
+                textAlign: 'center',
               }}
               onMouseEnter={e => {
                 (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(124,58,237,0.2)';
@@ -267,6 +245,7 @@ export default function Hero() {
 
           {/* Scroll hint */}
           <div
+            className="hero-scroll"
             style={{
               color: 'var(--gray)',
               fontSize: '0.82rem',
@@ -282,197 +261,27 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* RIGHT: Orbital skill showcase */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <div className="orbital-scale">
-          <div
-            ref={orbitalRef}
-            style={{
-              position: 'relative',
-              width: '420px',
-              height: '420px',
-              transition: 'transform 0.1s ease',
-              flexShrink: 0,
-            }}
-          >
-            {/* Outer orbital ring */}
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                borderRadius: '50%',
-                border: '1px dashed rgba(124,58,237,0.4)',
-                animation: 'orbit 25s linear infinite',
-              }}
-            >
-              {/* 8 dots on outer ring */}
-              {Array.from({ length: 8 }).map((_, i) => {
-                const a = (i * 360) / 8;
-                const rad = (a * Math.PI) / 180;
-                const r = 209;
-                const x = 210 + r * Math.cos(rad);
-                const y = 210 + r * Math.sin(rad);
-                return (
-                  <div
-                    key={i}
-                    style={{
-                      position: 'absolute',
-                      width: '6px',
-                      height: '6px',
-                      borderRadius: '50%',
-                      background: 'var(--purple-light)',
-                      boxShadow: '0 0 8px rgba(167,139,250,0.8)',
-                      left: `${x}px`,
-                      top: `${y}px`,
-                      transform: 'translate(-50%,-50%)',
-                    }}
-                  />
-                );
-              })}
-            </div>
-
-            {/* Inner orbital ring */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '60px',
-                left: '60px',
-                right: '60px',
-                bottom: '60px',
-                borderRadius: '50%',
-                border: '1px dashed rgba(167,139,250,0.3)',
-                animation: 'orbit 18s linear infinite reverse',
-              }}
-            />
-
-            {/* Center: Live 3D avatar (follows cursor + rotates on scroll) */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%,-50%)',
-                width: '260px',
-                height: '300px',
-                zIndex: 10,
-              }}
-            >
-              {/* glow halo behind the avatar */}
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: '10%',
-                  borderRadius: '50%',
-                  background: 'radial-gradient(circle, rgba(124,58,237,0.35) 0%, transparent 65%)',
-                  filter: 'blur(8px)',
-                  animation: 'glow-pulse 4s ease-in-out infinite',
-                }}
-              />
-              <Avatar3D />
-            </div>
-
-            {/* Orbiting skill icons */}
-            {ORBIT_SKILLS.map((skill, i) => {
-              const rad = (skill.angle * Math.PI) / 180;
-              const radius = 188;
-              const x = 210 + radius * Math.cos(rad);
-              const y = 210 + radius * Math.sin(rad);
-              return (
-                <div
-                  key={i}
-                  style={{
-                    position: 'absolute',
-                    left: `${x}px`,
-                    top: `${y}px`,
-                    transform: 'translate(-50%,-50%)',
-                    zIndex: 5,
-                  }}
-                >
-                  <div
-                    style={{
-                      width: '54px',
-                      height: '54px',
-                      background: 'rgba(10,10,26,0.9)',
-                      border: '1px solid rgba(124,58,237,0.4)',
-                      borderRadius: '12px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      backdropFilter: 'blur(10px)',
-                      animation: `glow-pulse ${3 + i * 0.3}s ease-in-out ${i * 0.2}s infinite`,
-                      cursor: 'default',
-                      transition: 'transform 0.2s ease, border-color 0.2s ease',
-                    }}
-                    onMouseEnter={e => {
-                      (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.2)';
-                      (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(167,139,250,0.8)';
-                    }}
-                    onMouseLeave={e => {
-                      (e.currentTarget as HTMLDivElement).style.transform = 'scale(1)';
-                      (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(124,58,237,0.4)';
-                    }}
-                  >
-                    <span style={{ fontSize: '1.4rem', lineHeight: 1 }}>{skill.emoji}</span>
-                    <span
-                      style={{
-                        fontSize: '0.52rem',
-                        color: 'var(--gray)',
-                        fontFamily: 'var(--font-inter)',
-                        marginTop: '3px',
-                        fontWeight: 500,
-                      }}
-                    >
-                      {skill.label}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
-
-            {/* Glow orb behind orbital */}
-            <div
-              style={{
-                position: 'absolute',
-                inset: '-40px',
-                borderRadius: '50%',
-                background: 'radial-gradient(ellipse, rgba(124,58,237,0.06) 0%, transparent 70%)',
-                pointerEvents: 'none',
-                animation: 'nebula-pulse 4s ease-in-out infinite',
-              }}
-            />
-          </div>
-          </div>
+        {/* RIGHT: Cursor-tracking 3D robot */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+          <SplineRobot />
         </div>
       </div>
 
       <style>{`
-        .orbital-scale { transform: scale(1); transform-origin: center; }
-        @media (max-width: 1100px) {
-          .orbital-scale { transform: scale(0.88); }
-        }
         @media (max-width: 900px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
             gap: 40px !important;
             text-align: center;
           }
-          .hero-grid > div:last-child {
-            justify-content: center !important;
-          }
-          .orbital-scale { transform: scale(0.92); }
+          .hero-grid > div:last-child { justify-content: center !important; }
+          .hero-desc { margin-left: auto !important; margin-right: auto !important; }
+          .hero-role, .hero-cta, .hero-scroll { justify-content: center !important; }
         }
         @media (max-width: 480px) {
-          .orbital-scale { transform: scale(0.74); }
-        }
-        @media (max-width: 360px) {
-          .orbital-scale { transform: scale(0.62); }
+          .hero-grid { gap: 28px !important; }
+          .hero-cta > button, .hero-cta > a { flex: 1 1 100%; text-align: center; }
+          #hero { padding-top: 92px !important; padding-bottom: 40px !important; }
         }
       `}</style>
     </section>

@@ -301,8 +301,8 @@ export default function Skills() {
                 lineHeight: 1.7,
                 marginBottom: '14px',
               }}>
-                Always exploring new tools and AI workflows to sharpen my craft across design,
-                development, and QA.
+                Sharpening my QA craft day-to-day at Skypoint while exploring new tools and AI
+                workflows across design, development, and testing.
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                 {['Python', 'NoSQL', 'Android Studio', 'AI Tools', 'API Testing'].map((s, i) => (

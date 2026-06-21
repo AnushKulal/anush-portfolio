@@ -20,12 +20,12 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Anush Kulal M | Portfolio",
   description:
-    "MCA Student at Jain University — UI/UX Designer, Frontend Developer & Team Leader. Explore my work in design, development, and quality assurance.",
-  keywords: ["UI/UX Designer", "Frontend Developer", "React", "Figma", "Portfolio", "Anush Kulal"],
+    "MCA graduate and QA Engineer (Intern) at Skypoint, Bengaluru — UI/UX Designer, Frontend Developer & Team Leader. Explore my work in design, development, and quality assurance.",
+  keywords: ["QA Engineer", "UI/UX Designer", "Frontend Developer", "React", "Figma", "Portfolio", "Anush Kulal"],
   authors: [{ name: "Anush Kulal M" }],
   openGraph: {
     title: "Anush Kulal M | Portfolio",
-    description: "UI/UX Designer & Frontend Developer Portfolio",
+    description: "QA Engineer · UI/UX Designer · Frontend Developer Portfolio",
     type: "website",
   },
 };

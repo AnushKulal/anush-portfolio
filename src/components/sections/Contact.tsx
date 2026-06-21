@@ -17,10 +17,11 @@ function ContactOrbit() {
   return (
     <div
       ref={containerRef}
+      className="contact-orbit"
       style={{
         position: 'relative',
-        width: '320px',
-        height: '320px',
+        width: 'min(320px, 78vw)',
+        aspectRatio: '1 / 1',
         margin: '0 auto 50px',
       }}
     >
@@ -39,10 +40,10 @@ function ContactOrbit() {
       <div
         style={{
           position: 'absolute',
-          top: '40px',
-          left: '40px',
-          right: '40px',
-          bottom: '40px',
+          top: '12.5%',
+          left: '12.5%',
+          right: '12.5%',
+          bottom: '12.5%',
           borderRadius: '50%',
           border: '1px dashed rgba(167,139,250,0.2)',
           animation: hoveredIdx !== null ? 'none' : 'orbit 15s linear infinite reverse',
@@ -78,9 +79,9 @@ function ContactOrbit() {
       {/* Orbiting contact icons */}
       {orbitContacts.map((contact, i) => {
         const rad = (contact.angle * Math.PI) / 180;
-        const radius = 130;
-        const x = 160 + radius * Math.cos(rad);
-        const y = 160 + radius * Math.sin(rad);
+        const radiusPct = 40.6; // 130 / 320, expressed as % so positions scale with the container
+        const x = 50 + radiusPct * Math.cos(rad);
+        const y = 50 + radiusPct * Math.sin(rad);
         const isHovered = hoveredIdx === i;
 
         return (
@@ -94,8 +95,8 @@ function ContactOrbit() {
             onMouseLeave={() => setHoveredIdx(null)}
             style={{
               position: 'absolute',
-              left: `${x}px`,
-              top: `${y}px`,
+              left: `${x}%`,
+              top: `${y}%`,
               transform: `translate(-50%,-50%) ${isHovered ? 'scale(1.3)' : 'scale(1)'}`,
               zIndex: 5,
               textDecoration: 'none',
@@ -333,7 +334,7 @@ export default function Contact() {
             fontSize: '0.85rem',
             fontFamily: 'var(--font-inter)',
           }}>
-            © 2025 Anush Kulal M — Crafted with ✦ and lots of ☕
+            © 2026 Anush Kulal M — Crafted with ✦ and lots of ☕
           </div>
           <div style={{ display: 'flex', gap: '16px' }}>
             {[
