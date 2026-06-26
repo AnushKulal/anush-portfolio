@@ -15,17 +15,6 @@ interface Achievement {
 
 const achievements: Achievement[] = [
   {
-    icon: '🧪',
-    title: 'Business QA Engineer (Intern) — Skypoint Cloud',
-    issuer: 'Skypoint Cloud',
-    date: 'Apr 2026 – Current',
-    description:
-      'Driving quality across SaaS modules — functional, regression, integration, UI, and end-to-end testing — while prioritizing backlogs, writing acceptance criteria, and validating features end-to-end within Agile sprints.',
-    type: 'award',
-    color: '#4ade80',
-    badge: 'Current Role',
-  },
-  {
     icon: '🤖',
     title: 'Android App Components',
     issuer: 'Vanderbilt University',
@@ -74,38 +63,6 @@ const achievements: Achievement[] = [
     type: 'award',
     color: '#EC4899',
     badge: 'Zonal Medal',
-  },
-  {
-    icon: '🎨',
-    title: 'UI/UX Team Lead — Xthlete India',
-    issuer: 'Xthlete India',
-    description:
-      'Promoted from UI/UX Designer to Team Lead — supervising interns, coordinating task allocation, and ensuring design quality and on-time delivery.',
-    type: 'award',
-    color: '#A78BFA',
-    badge: 'Leadership',
-  },
-  {
-    icon: '🚀',
-    title: 'MCA — Jain University',
-    issuer: 'Jain (Deemed-to-be University)',
-    date: 'Jul 2024 – 2026',
-    description:
-      'Master of Computer Applications (CGPA 7.8) with focus areas in Data Structures, Networking, and Databases.',
-    type: 'academic',
-    color: '#10B981',
-    badge: 'CGPA 7.8',
-  },
-  {
-    icon: '🎓',
-    title: 'BCA — Jain University',
-    issuer: 'Jain (Deemed-to-be University)',
-    date: 'Apr 2022',
-    description:
-      'Bachelor of Computer Applications (CGPA 8.2) with focus on Web Development and Android Development.',
-    type: 'academic',
-    color: '#6366F1',
-    badge: 'CGPA 8.2',
   },
 ];
 
@@ -266,7 +223,7 @@ export default function Achievements() {
           transition={{ duration: 0.7 }}
           style={{ textAlign: 'center', marginBottom: '60px' }}
         >
-          <span className="section-label" style={{ color: '#F59E0B', textAlign: 'center' }}>// Certifications & Achievements</span>
+          <span className="section-label" style={{ color: '#F59E0B', textAlign: 'center' }}>// Certificates & Achievements</span>
           <h2
             style={{
               fontFamily: 'var(--font-space)',
@@ -276,18 +233,18 @@ export default function Achievements() {
               lineHeight: 1.2,
             }}
           >
-            Certifications &{' '}
+            Certificates &{' '}
             <span style={{
               background: 'linear-gradient(135deg, #A78BFA, #06B6D4)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
             }}>
-              Milestones
+              Achievements
             </span>
           </h2>
           <p style={{ color: 'var(--gray)', fontSize: 'clamp(0.9rem, 2.5vw, 1.05rem)', maxWidth: '600px', margin: '16px auto 0', fontFamily: 'var(--font-inter)', lineHeight: 1.7 }}>
-            Certifications, leadership roles, and academic accomplishments that reflect my dedication to continuous growth.
+            Professional certifications and recognitions that reflect my dedication to continuous learning.
           </p>
         </motion.div>
 
