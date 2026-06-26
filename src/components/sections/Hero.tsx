@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import SplineRobot from '@/components/three/SplineRobot';
 
-const ROLES = ['QA Engineer', 'UI/UX Designer', 'Frontend Developer', 'Team Leader'];
+const ROLES = ['Business QA Engineer', 'Business Analyst', 'UI/UX Designer', 'Frontend Developer', 'Team Leader'];
 
 function useTypewriter(texts: string[], speed = 80, pause = 2000) {
   const [display, setDisplay] = useState('');
@@ -100,7 +100,7 @@ export default function Hero() {
             }}
           >
             <span style={{ color: '#4ade80', fontSize: '0.7rem' }}>✦</span>
-            QA Engineer @ Skypoint · MCA Graduate
+            Business QA Engineer @ Skypoint Cloud · MCA Graduate
           </div>
 
           {/* Name */}
@@ -177,10 +177,10 @@ export default function Hero() {
               fontFamily: 'var(--font-inter)',
             }}
           >
-            MCA graduate from Jain University, currently working as a QA Engineer (Intern) at
-            Skypoint in Bengaluru. I have a passion for crafting beautiful interfaces, building
-            seamless user experiences, and leading teams to deliver great products — bridging
-            design and development with an eye for detail.
+            MCA graduate working as a Business QA Engineer (Intern) at Skypoint Cloud, across QA,
+            business analysis, UI/UX, and frontend development. I collaborate with cross-functional
+            teams through the full SDLC — from prioritizing backlogs and writing acceptance criteria
+            to end-to-end feature validation — bridging the technical and business sides of product.
           </p>
 
           {/* CTA Buttons */}

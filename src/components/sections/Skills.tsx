@@ -223,8 +223,8 @@ export default function Skills() {
               gap: '12px',
             }}>
               {[
-                { value: '3', label: 'Internships' },
-                { value: '5+', label: 'Projects' },
+                { value: '4', label: 'Internships' },
+                { value: '5', label: 'Projects' },
                 { value: '4', label: 'Languages' },
               ].map((stat, i) => (
                 <motion.div
@@ -301,8 +301,8 @@ export default function Skills() {
                 lineHeight: 1.7,
                 marginBottom: '14px',
               }}>
-                Sharpening my QA craft day-to-day at Skypoint while exploring new tools and AI
-                workflows across design, development, and testing.
+                Sharpening my QA and business-analysis craft day-to-day at Skypoint Cloud while
+                exploring new tools and AI workflows across design, development, and testing.
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                 {['Python', 'NoSQL', 'Android Studio', 'AI Tools', 'API Testing'].map((s, i) => (
@@ -373,7 +373,7 @@ export default function Skills() {
                 </span>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {['Team Leadership', 'Communication', 'Problem Solving', 'Time Management', 'QA & Testing', 'Collaboration'].map((s, i) => (
+                {['Business Analysis', 'Agile / Scrum', 'Team Leadership', 'Communication', 'Problem Solving', 'QA & Testing', 'Collaboration'].map((s, i) => (
                   <span key={i} className="tech-badge">{s}</span>
                 ))}
               </div>

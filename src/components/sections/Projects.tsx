@@ -27,6 +27,18 @@ dashboard.ai.on('query', async (q) => {
 });`,
   },
   {
+    id: 5,
+    category: 'Full Stack',
+    icon: '🏠',
+    title: 'TenantPro — Property Management System',
+    description:
+      'A web-based property management platform that streamlines rental operations — managing tenants, properties, lease agreements, rent payments, and maintenance requests through a centralized, responsive dashboard.',
+    tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Tailwind CSS', 'Figma'],
+    featured: false,
+    color: '#22C55E',
+    codeSnippet: null,
+  },
+  {
     id: 2,
     category: 'UI/UX Design',
     icon: '📱',

@@ -5,8 +5,8 @@ import { motion } from 'framer-motion';
 
 const orbitContacts = [
   { emoji: '✉️', label: 'Email', href: 'mailto:anushkulalm@gmail.com', angle: 0, color: '#A78BFA' },
-  { emoji: '💼', label: 'LinkedIn', href: 'https://linkedin.com', angle: 90, color: '#06B6D4' },
-  { emoji: '🐙', label: 'GitHub', href: 'https://github.com', angle: 180, color: '#3B82F6' },
+  { emoji: '💼', label: 'LinkedIn', href: 'https://www.linkedin.com/in/anush-kulal-015b21130', angle: 90, color: '#06B6D4' },
+  { emoji: '🐙', label: 'GitHub', href: 'https://github.com/AnushKulal', angle: 180, color: '#3B82F6' },
   { emoji: '📄', label: 'Resume', href: '/resume.pdf', angle: 270, color: '#F59E0B' },
 ];
 
@@ -339,8 +339,8 @@ export default function Contact() {
           <div style={{ display: 'flex', gap: '16px' }}>
             {[
               { label: 'Email', href: 'mailto:anushkulalm@gmail.com' },
-              { label: 'LinkedIn', href: 'https://linkedin.com' },
-              { label: 'GitHub', href: 'https://github.com' },
+              { label: 'LinkedIn', href: 'https://www.linkedin.com/in/anush-kulal-015b21130' },
+              { label: 'GitHub', href: 'https://github.com/AnushKulal' },
             ].map(link => (
               <a
                 key={link.label}

@@ -5,18 +5,20 @@ import { motion } from 'framer-motion';
 const missions = [
   {
     id: '01',
-    company: 'Skypoint',
-    role: 'QA Engineer (Intern)',
-    period: 'Current',
+    company: 'Skypoint Cloud',
+    role: 'Business QA Engineer (Intern)',
+    period: 'Apr 2026 – Current',
     color: '#4ade80',
     gradient: 'linear-gradient(135deg, rgba(74,222,128,0.15), rgba(74,222,128,0.05))',
     achievements: [
-      'Writing and executing detailed test cases to validate features across the platform',
-      'Performing manual QA testing and logging defects with clear reproduction steps',
-      'Tracking bugs through to resolution and verifying fixes before each release',
-      'Collaborating closely with developers to uphold quality standards on every build',
+      'Performed functional, regression, integration, UI, and end-to-end testing for SaaS applications across multiple modules',
+      'Collaborated with Product Managers, Developers, and Designers to clarify requirements and validate implemented features',
+      'Prioritized product backlogs and wrote acceptance criteria for user stories, reviewing them with Product Managers',
+      'Led feature-level end-to-end validation, regression, and production sanity testing to ensure release readiness',
+      'Executed weekly vulnerability scans and generated security reports to track potential application risks',
+      'Contributed to Agile ceremonies (Sprint Planning, Stand-ups, Reviews, Retrospectives) and release sign-offs',
     ],
-    tech: ['Manual Testing', 'Test Cases', 'Bug Reporting', 'QA'],
+    tech: ['Manual Testing', 'Regression', 'Agile', 'Acceptance Criteria', 'Bug Reporting', 'Security Scans'],
   },
   {
     id: '02',
@@ -52,7 +54,7 @@ const missions = [
     id: '04',
     company: 'Reg Vectors',
     role: 'UI/UX Designer & QA Engineer',
-    period: '3 Months',
+    period: '6 Months',
     color: '#3B82F6',
     gradient: 'linear-gradient(135deg, rgba(59,130,246,0.12), rgba(59,130,246,0.03))',
     achievements: [

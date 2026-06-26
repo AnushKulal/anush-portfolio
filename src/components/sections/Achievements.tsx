@@ -6,7 +6,7 @@ interface Achievement {
   icon: string;
   title: string;
   issuer: string;
-  date: string;
+  date?: string;
   description: string;
   type: 'certification' | 'award' | 'academic';
   color: string;
@@ -16,58 +16,74 @@ interface Achievement {
 const achievements: Achievement[] = [
   {
     icon: '🧪',
-    title: 'QA Engineer (Intern) — Skypoint',
-    issuer: 'Skypoint',
-    date: 'Current',
+    title: 'Business QA Engineer (Intern) — Skypoint Cloud',
+    issuer: 'Skypoint Cloud',
+    date: 'Apr 2026 – Current',
     description:
-      'Currently working as a QA Engineer at Skypoint in Bengaluru — writing and executing test cases, performing manual testing, logging and tracking defects, and collaborating with developers to ship quality releases.',
+      'Driving quality across SaaS modules — functional, regression, integration, UI, and end-to-end testing — while prioritizing backlogs, writing acceptance criteria, and validating features end-to-end within Agile sprints.',
     type: 'award',
     color: '#4ade80',
     badge: 'Current Role',
   },
   {
-    icon: '📜',
-    title: 'Coursera Professional Certificate',
-    issuer: 'Coursera',
-    date: '2024',
+    icon: '🤖',
+    title: 'Android App Components',
+    issuer: 'Vanderbilt University',
     description:
-      'Completed a professional certification course on Coursera, demonstrating commitment to continuous learning and upskilling in emerging technologies and professional development.',
+      'Intents, Activities, and Broadcast Receivers — core Android application components and inter-component communication.',
     type: 'certification',
     color: '#3B82F6',
-    badge: 'Verified',
+    badge: 'Certified',
+  },
+  {
+    icon: '🌐',
+    title: 'Exploring the Internet of Things',
+    issuer: 'Jain Group of Institutes',
+    description:
+      'Concepts and applications of IoT — connected devices, architectures, and real-world use cases.',
+    type: 'certification',
+    color: '#06B6D4',
+    badge: 'Certified',
+  },
+  {
+    icon: '⚙️',
+    title: 'Automation Explorer Training',
+    issuer: 'UiPath Academy',
+    description:
+      'RPA fundamentals and automation workflows through the UiPath Academy Automation Explorer learning track.',
+    type: 'certification',
+    color: '#F59E0B',
+    badge: 'Certified',
+  },
+  {
+    icon: '☁️',
+    title: 'Azure Cloud Skilling Programme',
+    issuer: 'Magic Bus · Bangalore Livelihood Centre',
+    description:
+      'Microsoft Azure cloud skilling programme covering core cloud concepts, services, and fundamentals.',
+    type: 'certification',
+    color: '#8B5CF6',
+    badge: 'Certified',
+  },
+  {
+    icon: '🏅',
+    title: 'International Sports Knowledge Olympiad',
+    issuer: 'SOF — Science Olympiad Foundation',
+    description:
+      'Zonal-level excellence medal (1st) in the SOF International Sports Knowledge Olympiad.',
+    type: 'award',
+    color: '#EC4899',
+    badge: 'Zonal Medal',
   },
   {
     icon: '🎨',
     title: 'UI/UX Team Lead — Xthlete India',
     issuer: 'Xthlete India',
-    date: '2024',
     description:
-      'Promoted from UI/UX Designer to Team Lead after demonstrating exceptional design quality and consistency. Managed and supervised all interns within the domain, ensuring alignment with project requirements and deadlines.',
+      'Promoted from UI/UX Designer to Team Lead — supervising interns, coordinating task allocation, and ensuring design quality and on-time delivery.',
     type: 'award',
-    color: '#F59E0B',
+    color: '#A78BFA',
     badge: 'Leadership',
-  },
-  {
-    icon: '🎓',
-    title: 'BCA — CGPA 8.2',
-    issuer: 'Jain (Deemed-to-be University)',
-    date: 'Apr 2022',
-    description:
-      'Completed Bachelor of Computer Applications with a strong CGPA of 8.2. Focus areas included Web Development and Android Development, building a strong foundation in CS fundamentals.',
-    type: 'academic',
-    color: '#8B5CF6',
-    badge: 'CGPA 8.2',
-  },
-  {
-    icon: '🏗️',
-    title: 'Full-Stack Dashboard — Talisma',
-    issuer: 'Talisma Internship',
-    date: '2024',
-    description:
-      'Successfully designed and developed a complete customer dashboard from Figma prototype to React.js implementation during a 2-month internship, demonstrating end-to-end product delivery skills.',
-    type: 'award',
-    color: '#06B6D4',
-    badge: 'Project Win',
   },
   {
     icon: '🚀',
@@ -75,10 +91,21 @@ const achievements: Achievement[] = [
     issuer: 'Jain (Deemed-to-be University)',
     date: 'Jul 2024 – 2026',
     description:
-      'Completed Master of Computer Applications (CGPA 7.8) with focus areas in Data Structures, Networking, and Databases. Now applying these skills professionally as a QA Engineer (Intern) at Skypoint.',
+      'Master of Computer Applications (CGPA 7.8) with focus areas in Data Structures, Networking, and Databases.',
     type: 'academic',
-    color: '#EC4899',
+    color: '#10B981',
     badge: 'CGPA 7.8',
+  },
+  {
+    icon: '🎓',
+    title: 'BCA — Jain University',
+    issuer: 'Jain (Deemed-to-be University)',
+    date: 'Apr 2022',
+    description:
+      'Bachelor of Computer Applications (CGPA 8.2) with focus on Web Development and Android Development.',
+    type: 'academic',
+    color: '#6366F1',
+    badge: 'CGPA 8.2',
   },
 ];
 
@@ -94,7 +121,7 @@ function AchievementCard({ item, index }: { item: Achievement; index: number }) 
       initial={{ opacity: 0, y: 40, scale: 0.95 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
       style={{ position: 'relative' }}
     >
       <div
@@ -178,11 +205,13 @@ function AchievementCard({ item, index }: { item: Achievement; index: number }) 
           </div>
         </div>
 
-        {/* Date */}
-        <div style={{ fontSize: '0.75rem', color: 'var(--gray)', display: 'flex', alignItems: 'center', gap: '6px', position: 'relative', zIndex: 1, fontFamily: 'var(--font-inter)' }}>
-          <span>📅</span>
-          <span>{item.date}</span>
-        </div>
+        {/* Date (only when present) */}
+        {item.date && (
+          <div style={{ fontSize: '0.75rem', color: 'var(--gray)', display: 'flex', alignItems: 'center', gap: '6px', position: 'relative', zIndex: 1, fontFamily: 'var(--font-inter)' }}>
+            <span>📅</span>
+            <span>{item.date}</span>
+          </div>
+        )}
 
         {/* Divider */}
         <div style={{ height: '1px', background: `linear-gradient(90deg, ${item.color}50, transparent)` }} />
@@ -237,7 +266,7 @@ export default function Achievements() {
           transition={{ duration: 0.7 }}
           style={{ textAlign: 'center', marginBottom: '60px' }}
         >
-          <span className="section-label" style={{ color: '#F59E0B', textAlign: 'center' }}>// Achievements</span>
+          <span className="section-label" style={{ color: '#F59E0B', textAlign: 'center' }}>// Certifications & Achievements</span>
           <h2
             style={{
               fontFamily: 'var(--font-space)',
@@ -247,7 +276,7 @@ export default function Achievements() {
               lineHeight: 1.2,
             }}
           >
-            Recognitions &{' '}
+            Certifications &{' '}
             <span style={{
               background: 'linear-gradient(135deg, #A78BFA, #06B6D4)',
               WebkitBackgroundClip: 'text',
@@ -258,7 +287,7 @@ export default function Achievements() {
             </span>
           </h2>
           <p style={{ color: 'var(--gray)', fontSize: 'clamp(0.9rem, 2.5vw, 1.05rem)', maxWidth: '600px', margin: '16px auto 0', fontFamily: 'var(--font-inter)', lineHeight: 1.7 }}>
-            Certifications, leadership roles, and academic accomplishments that reflect my dedication to growth.
+            Certifications, leadership roles, and academic accomplishments that reflect my dedication to continuous growth.
           </p>
         </motion.div>
 

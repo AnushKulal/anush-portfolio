@@ -161,7 +161,7 @@ export default function About() {
                 animation: 'float 4s ease-in-out infinite',
               }}
             >
-              <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--purple-light)', fontFamily: 'var(--font-space)' }}>3</div>
+              <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--purple-light)', fontFamily: 'var(--font-space)' }}>4</div>
               <div style={{ fontSize: '0.72rem', color: 'var(--gray)', fontFamily: 'var(--font-inter)' }}>Internships</div>
             </div>
 
@@ -208,7 +208,7 @@ export default function About() {
               }}
             >
               <span style={{ color: '#4ade80' }}>●</span>
-              QA Engineer (Intern) at Skypoint, Bengaluru
+              Business QA Engineer (Intern) at Skypoint Cloud
             </div>
 
             {/* Bio */}
@@ -221,11 +221,11 @@ export default function About() {
                 fontFamily: 'var(--font-inter)',
               }}
             >
-              I&apos;m a passionate MCA graduate with a strong foundation in Computer Science, programming,
-              software development, and UI/UX design. Currently working as a QA Engineer (Intern) at
-              Skypoint in Bengaluru, and with hands-on experience across three prior internships
-              spanning design, development, and quality assurance, I bring both creative vision and
-              technical execution to every project.
+              I&apos;m a passionate MCA graduate working across Business Analysis, Quality Assurance,
+              Frontend Development, UI/UX Design, and Team Leadership. Currently a Business QA Engineer
+              (Intern) at Skypoint Cloud, I work closely with cross-functional teams through the full
+              software development lifecycle — contributing to both product planning and successful
+              feature delivery.
             </p>
             <p
               style={{
@@ -236,10 +236,10 @@ export default function About() {
                 fontFamily: 'var(--font-inter)',
               }}
             >
-              From designing intuitive interfaces in Figma to leading development teams and building
-              full-stack applications with React and Node.js, I thrive where design meets code.
-              Now sharpening my quality-assurance craft as a QA Engineer at Skypoint while continuing
-              to explore AI tools and expand my backend skills.
+              From prioritizing backlogs and writing acceptance criteria to end-to-end feature
+              validation, regression, and security testing, I bridge the technical and business sides
+              of product. I&apos;m looking to leverage this experience in a Business Analyst or Project
+              Management role, building products that deliver real value to users and the business.
             </p>
 
             {/* Info rows */}
