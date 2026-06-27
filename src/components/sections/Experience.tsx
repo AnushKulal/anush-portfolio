@@ -39,7 +39,7 @@ const missions = [
     id: '03',
     company: 'Talisma',
     role: 'Development Intern',
-    period: 'Jun 2025 – Aug 2026',
+    period: 'Jun 2025 – Aug 2025',
     color: '#06B6D4',
     gradient: 'linear-gradient(135deg, rgba(6,182,212,0.12), rgba(6,182,212,0.03))',
     achievements: [
@@ -54,7 +54,7 @@ const missions = [
     id: '04',
     company: 'Reg Vectors',
     role: 'UI/UX Designer & QA Engineer',
-    period: 'Mar 2024 – Sep 2026',
+    period: 'Mar 2024 – Sep 2024',
     color: '#3B82F6',
     gradient: 'linear-gradient(135deg, rgba(59,130,246,0.12), rgba(59,130,246,0.03))',
     achievements: [
