@@ -65,7 +65,15 @@ export default function SplineRobot() {
     const el = containerRef.current;
     if (!el) return;
     const io = new IntersectionObserver(
-      ([e]) => setInView(e.isIntersecting),
+      ([e]) => {
+        // One-way latch: mount Spline the first time it nears the viewport,
+        // then STOP observing so it never unmounts/reloads on scroll. This
+        // keeps the scene (and its cursor tracking) alive for the whole page.
+        if (e.isIntersecting) {
+          setInView(true);
+          io.disconnect();
+        }
+      },
       { rootMargin: '300px', threshold: 0.01 }
     );
     io.observe(el);
@@ -78,6 +86,44 @@ export default function SplineRobot() {
     const t = setTimeout(() => { if (!loaded) setFailed(true); }, 15000);
     return () => clearTimeout(t);
   }, [inView, loaded, failed, webgl]);
+
+  // Spline only tracks the cursor while it's directly over its <canvas>
+  // (the hero's right half). Forward window-wide pointer moves onto the
+  // canvas so the robot follows the cursor ANYWHERE on the landing page.
+  useEffect(() => {
+    if (!loaded || webgl !== true) return;
+    const root = containerRef.current;
+    if (!root) return;
+
+    let canvas: HTMLCanvasElement | null = null;
+    let raf = 0;
+    let tries = 0;
+
+    const forward = (e: PointerEvent) => {
+      // Re-acquire the canvas if it was ever replaced (defensive against remounts).
+      if (!canvas || !canvas.isConnected) canvas = root.querySelector('canvas');
+      if (!canvas || e.target === canvas) return; // canvas handles its own moves
+      const base = { clientX: e.clientX, clientY: e.clientY, bubbles: false, cancelable: true, view: window };
+      canvas.dispatchEvent(new PointerEvent('pointermove', { ...base, pointerId: 1, pointerType: 'mouse' }));
+      canvas.dispatchEvent(new MouseEvent('mousemove', base));
+    };
+
+    // The canvas mounts shortly after onLoad — retry a few frames until it exists.
+    const attach = () => {
+      canvas = root.querySelector('canvas');
+      if (canvas) {
+        window.addEventListener('pointermove', forward, { passive: true });
+      } else if (tries++ < 60) {
+        raf = requestAnimationFrame(attach);
+      }
+    };
+    attach();
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('pointermove', forward);
+    };
+  }, [loaded, webgl]);
 
   const canRenderSpline = inView && webgl === true && !failed;
   const showFallback = webgl === false || failed;
