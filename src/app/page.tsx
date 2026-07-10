@@ -1,4 +1,5 @@
 import NavBar from '@/components/ui/NavBar';
+import ScrollProgress from '@/components/ui/ScrollProgress';
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
 import Skills from '@/components/sections/Skills';
@@ -12,6 +13,7 @@ export default function Home() {
   return (
     <main style={{ background: 'transparent', position: 'relative' }}>
       <SpaceBackgroundClient />
+      <ScrollProgress />
       <NavBar />
       <Hero />
       <About />

@@ -2,12 +2,14 @@
 
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { FiMail, FiLinkedin, FiGithub, FiFileText, FiDownload } from 'react-icons/fi';
+import type { IconType } from 'react-icons';
 
-const orbitContacts = [
-  { emoji: '✉️', label: 'Email', href: 'mailto:anushkulalm@gmail.com', angle: 0, color: '#A78BFA' },
-  { emoji: '💼', label: 'LinkedIn', href: 'https://www.linkedin.com/in/anush-kulal-015b21130', angle: 90, color: '#06B6D4' },
-  { emoji: '🐙', label: 'GitHub', href: 'https://github.com/AnushKulal', angle: 180, color: '#3B82F6' },
-  { emoji: '📄', label: 'Resume', href: '/resume.pdf', angle: 270, color: '#F59E0B' },
+const orbitContacts: { Icon: IconType; label: string; href: string; angle: number; color: string }[] = [
+  { Icon: FiMail, label: 'Email', href: 'mailto:anushkulalm@gmail.com', angle: 0, color: '#A78BFA' },
+  { Icon: FiLinkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/anush-kulal-015b21130', angle: 90, color: '#06B6D4' },
+  { Icon: FiGithub, label: 'GitHub', href: 'https://github.com/AnushKulal', angle: 180, color: '#3B82F6' },
+  { Icon: FiFileText, label: 'Resume', href: '/resume.pdf', angle: 270, color: '#F59E0B' },
 ];
 
 function ContactOrbit() {
@@ -113,14 +115,14 @@ function ContactOrbit() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.4rem',
+                color: isHovered ? '#fff' : contact.color,
                 boxShadow: isHovered ? `0 0 20px ${contact.color}80` : 'none',
                 transition: 'all 0.3s ease',
                 backdropFilter: 'blur(10px)',
                 flexDirection: 'column',
               }}
             >
-              <span style={{ lineHeight: 1 }}>{contact.emoji}</span>
+              <contact.Icon size={22} />
             </div>
             {isHovered && (
               <div style={{
@@ -167,7 +169,7 @@ export default function Contact() {
           viewport={{ once: true }}
           style={{ textAlign: 'center', marginBottom: '60px' }}
         >
-          <span className="section-label" style={{ display: 'block', textAlign: 'center' }}>// 05. Contact</span>
+          <span className="section-label" style={{ display: 'block', textAlign: 'center' }}>// 06. Contact</span>
           <h2
             style={{
               fontFamily: 'var(--font-space)',
@@ -276,6 +278,9 @@ export default function Contact() {
               textDecoration: 'none',
               transition: 'all 0.3s ease',
               boxShadow: '0 0 25px rgba(124,58,237,0.4)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
             }}
             onMouseEnter={e => {
               (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-3px)';
@@ -286,7 +291,7 @@ export default function Contact() {
               (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 0 25px rgba(124,58,237,0.4)';
             }}
           >
-            ✉️ Send Email
+            <FiMail size={17} /> Send Email
           </a>
           <a
             href="/resume.pdf"
@@ -303,6 +308,9 @@ export default function Contact() {
               textDecoration: 'none',
               transition: 'all 0.3s ease',
               backdropFilter: 'blur(10px)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
             }}
             onMouseEnter={e => {
               (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(124,58,237,0.2)';
@@ -313,7 +321,7 @@ export default function Contact() {
               (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(0)';
             }}
           >
-            📄 Download Resume
+            <FiDownload size={17} /> Download Resume
           </a>
         </motion.div>
 

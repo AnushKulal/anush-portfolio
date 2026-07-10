@@ -2,20 +2,21 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import TechIcon from '@/components/ui/TechIcon';
 
 const techGrid = [
-  { emoji: '🎨', name: 'Figma', level: 90, color: '#A78BFA' },
-  { emoji: '⚛️', name: 'React.js', level: 70, color: '#06B6D4' },
-  { emoji: '🟨', name: 'JavaScript', level: 75, color: '#F59E0B' },
-  { emoji: '🌐', name: 'HTML/CSS', level: 90, color: '#F97316' },
-  { emoji: '☕', name: 'Java', level: 65, color: '#EF4444' },
-  { emoji: '🐍', name: 'Python', level: 50, color: '#84CC16' },
-  { emoji: '🟢', name: 'Node.js', level: 55, color: '#22C55E' },
-  { emoji: '🐙', name: 'Git/GitHub', level: 80, color: '#EC4899' },
-  { emoji: '🗄️', name: 'SQL', level: 65, color: '#3B82F6' },
-  { emoji: '🖌️', name: 'Canva', level: 85, color: '#8B5CF6' },
-  { emoji: 'Ⓒ', name: 'C++/C#', level: 60, color: '#06B6D4' },
-  { emoji: '📱', name: 'UI/UX Design', level: 88, color: '#A78BFA' },
+  { icon: 'figma', name: 'Figma', level: 90, color: '#A78BFA' },
+  { icon: 'react', name: 'React.js', level: 70, color: '#06B6D4' },
+  { icon: 'javascript', name: 'JavaScript', level: 75, color: '#F59E0B' },
+  { icon: 'html', name: 'HTML/CSS', level: 90, color: '#F97316' },
+  { icon: 'java', name: 'Java', level: 65, color: '#EF4444' },
+  { icon: 'python', name: 'Python', level: 50, color: '#84CC16' },
+  { icon: 'node', name: 'Node.js', level: 55, color: '#22C55E' },
+  { icon: 'git', name: 'Git/GitHub', level: 80, color: '#EC4899' },
+  { icon: 'sql', name: 'SQL', level: 65, color: '#3B82F6' },
+  { icon: 'canva', name: 'Canva', level: 85, color: '#8B5CF6' },
+  { icon: 'cpp', name: 'C++/C#', level: 60, color: '#06B6D4' },
+  { icon: 'design', name: 'UI/UX Design', level: 88, color: '#A78BFA' },
 ];
 
 const skillBars = [
@@ -50,7 +51,7 @@ const skillBars = [
   },
 ];
 
-function TechTile({ emoji, name, level, color, delay }: { emoji: string; name: string; level: number; color: string; delay: number }) {
+function TechTile({ icon, name, level, color, delay }: { icon: string; name: string; level: number; color: string; delay: number }) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -79,7 +80,7 @@ function TechTile({ emoji, name, level, color, delay }: { emoji: string; name: s
         overflow: 'hidden',
       }}
     >
-      <span style={{ fontSize: '2rem', lineHeight: 1 }}>{emoji}</span>
+      <TechIcon name={icon} size={30} color={color} style={{ transition: 'transform 0.3s ease', transform: hovered ? 'scale(1.12)' : 'scale(1)' }} />
       <span style={{ fontSize: '0.8rem', color: hovered ? '#fff' : 'var(--gray)', fontFamily: 'var(--font-inter)', fontWeight: 500, textAlign: 'center' }}>
         {name}
       </span>

@@ -2,12 +2,14 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { FiMapPin, FiPhone, FiMail, FiGlobe, FiBookOpen } from 'react-icons/fi';
+import type { IconType } from 'react-icons';
 
-const infoRows = [
-  { icon: '📍', label: 'Location', value: 'Bengaluru, Karnataka' },
-  { icon: '📞', label: 'Phone', value: '+91 9480487257' },
-  { icon: '✉️', label: 'Email', value: 'anushkulalm@gmail.com' },
-  { icon: '🗣️', label: 'Languages', value: 'English, Kannada, Hindi' },
+const infoRows: { Icon: IconType; label: string; value: string }[] = [
+  { Icon: FiMapPin, label: 'Location', value: 'Bengaluru, Karnataka' },
+  { Icon: FiPhone, label: 'Phone', value: '+91 9480487257' },
+  { Icon: FiMail, label: 'Email', value: 'anushkulalm@gmail.com' },
+  { Icon: FiGlobe, label: 'Languages', value: 'English, Hindi, Kannada, Tulu' },
 ];
 
 const education = [
@@ -257,7 +259,7 @@ export default function About() {
                     borderRadius: '10px',
                   }}
                 >
-                  <span style={{ fontSize: '1.1rem', flexShrink: 0 }}>{row.icon}</span>
+                  <row.Icon size={17} color="var(--purple-light)" style={{ flexShrink: 0 }} aria-hidden />
                   <span style={{ color: 'var(--gray)', fontSize: '0.82rem', fontFamily: 'var(--font-inter)', width: '70px', flexShrink: 0 }}>{row.label}</span>
                   <span style={{ color: 'var(--white)', fontSize: '0.9rem', fontFamily: 'var(--font-inter)', fontWeight: 500 }}>{row.value}</span>
                 </div>
@@ -281,9 +283,12 @@ export default function About() {
               fontWeight: 600,
               color: 'var(--white)',
               marginBottom: '24px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
             }}
           >
-            🎓 Education
+            <FiBookOpen size={20} color="var(--purple-light)" aria-hidden /> Education
           </h3>
           <div
             style={{

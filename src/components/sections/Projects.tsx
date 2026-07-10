@@ -2,18 +2,27 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { FiExternalLink, FiArrowRight } from 'react-icons/fi';
+import { LuLayoutDashboard, LuBuilding2, LuSmartphone, LuChartColumn, LuDrama, LuStar } from 'react-icons/lu';
+import type { IconType } from 'react-icons';
 
-const projects = [
+const GITHUB = 'https://github.com/AnushKulal';
+
+const projects: {
+  id: number; category: string; Icon: IconType; title: string; description: string;
+  tech: string[]; featured: boolean; color: string; codeSnippet: string | null; link: string;
+}[] = [
   {
     id: 1,
     category: 'Full Stack',
-    icon: '🖥️',
+    Icon: LuLayoutDashboard,
     title: 'Account Manager Dashboard',
     description:
       'A feature-rich account management dashboard with an integrated AI assistant. Built with React.js frontend, Node.js backend, and AI-powered insights for enhanced productivity.',
     tech: ['React.js', 'Node.js', 'AI Integration', 'REST APIs', 'CSS Modules'],
     featured: true,
     color: '#A78BFA',
+    link: GITHUB,
     codeSnippet: `const dashboard = {
   users: await fetchAccounts(),
   ai: new AIAssistant({ model: 'gpt-4' }),
@@ -29,49 +38,53 @@ dashboard.ai.on('query', async (q) => {
   {
     id: 5,
     category: 'Full Stack',
-    icon: '🏠',
+    Icon: LuBuilding2,
     title: 'TenantPro — Property Management System',
     description:
       'A web-based property management platform that streamlines rental operations — managing tenants, properties, lease agreements, rent payments, and maintenance requests through a centralized, responsive dashboard.',
     tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Tailwind CSS', 'Figma'],
     featured: false,
     color: '#22C55E',
+    link: GITHUB,
     codeSnippet: null,
   },
   {
     id: 2,
     category: 'UI/UX Design',
-    icon: '📱',
+    Icon: LuSmartphone,
     title: 'VPN Mobile App',
     description:
       'Interactive Figma prototype for a VPN mobile app featuring a clean, modern UI with server selection, connection status, and settings screens.',
     tech: ['Figma', 'UI/UX', 'Prototyping', 'Mobile Design'],
     featured: false,
     color: '#06B6D4',
+    link: GITHUB,
     codeSnippet: null,
   },
   {
     id: 3,
     category: 'Design → Dev',
-    icon: '📊',
+    Icon: LuChartColumn,
     title: 'Talisma Customer Dashboard',
     description:
       'End-to-end build from Figma design to React.js implementation. Customer data dashboard with dynamic rendering and static API integration.',
     tech: ['Figma', 'React.js', 'JavaScript', 'APIs'],
     featured: false,
     color: '#3B82F6',
+    link: GITHUB,
     codeSnippet: null,
   },
   {
     id: 4,
     category: 'Prototype + QA',
-    icon: '🎭',
+    Icon: LuDrama,
     title: 'Fun Club Platform',
     description:
       'Interactive prototype of a multi-activity platform (sports, dance, music) with full QA documentation including test cases and bug reports.',
     tech: ['Figma', 'Prototyping', 'QA', 'Test Cases'],
     featured: false,
     color: '#F59E0B',
+    link: GITHUB,
     codeSnippet: null,
   },
 ];
@@ -117,7 +130,7 @@ function FeaturedCard({ project }: { project: typeof projects[0] }) {
       {/* Left: info */}
       <div style={{ position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-          <span style={{ fontSize: '1.5rem' }}>{project.icon}</span>
+          <span style={{ display: 'inline-flex', color: project.color }}><project.Icon size={24} aria-hidden /></span>
           <span style={{
             padding: '4px 12px',
             background: `${project.color}20`,
@@ -131,6 +144,9 @@ function FeaturedCard({ project }: { project: typeof projects[0] }) {
             {project.category}
           </span>
           <span style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '5px',
             padding: '4px 12px',
             background: 'rgba(167,139,250,0.1)',
             border: '1px solid rgba(167,139,250,0.3)',
@@ -139,7 +155,7 @@ function FeaturedCard({ project }: { project: typeof projects[0] }) {
             color: 'var(--purple-light)',
             fontFamily: 'var(--font-inter)',
           }}>
-            ⭐ Featured
+            <LuStar size={12} aria-hidden /> Featured
           </span>
         </div>
 
@@ -171,7 +187,10 @@ function FeaturedCard({ project }: { project: typeof projects[0] }) {
         </div>
 
         <div style={{ display: 'flex', gap: '12px' }}>
-          <button
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               padding: '10px 22px',
               background: `linear-gradient(135deg, ${project.color}, ${project.color}aa)`,
@@ -183,12 +202,16 @@ function FeaturedCard({ project }: { project: typeof projects[0] }) {
               fontWeight: 600,
               cursor: 'pointer',
               transition: 'all 0.2s ease',
+              textDecoration: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-2px)'; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)'; }}
+            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-2px)'; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(0)'; }}
           >
-            View Project
-          </button>
+            View Project <FiExternalLink size={15} />
+          </a>
         </div>
       </div>
 
@@ -287,7 +310,7 @@ function ProjectCard({ project, delay }: { project: typeof projects[0]; delay: n
 
       <div style={{ position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
-          <span style={{ fontSize: '1.3rem' }}>{project.icon}</span>
+          <span style={{ display: 'inline-flex', color: project.color }}><project.Icon size={20} aria-hidden /></span>
           <span style={{
             padding: '3px 10px',
             background: `${project.color}20`,
@@ -339,7 +362,10 @@ function ProjectCard({ project, delay }: { project: typeof projects[0]; delay: n
           ))}
         </div>
 
-        <button
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
           style={{
             padding: '8px 18px',
             background: 'none',
@@ -351,16 +377,20 @@ function ProjectCard({ project, delay }: { project: typeof projects[0]; delay: n
             fontWeight: 600,
             cursor: 'pointer',
             transition: 'all 0.2s ease',
+            textDecoration: 'none',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '7px',
           }}
           onMouseEnter={e => {
-            (e.currentTarget as HTMLButtonElement).style.background = `${project.color}20`;
+            (e.currentTarget as HTMLAnchorElement).style.background = `${project.color}20`;
           }}
           onMouseLeave={e => {
-            (e.currentTarget as HTMLButtonElement).style.background = 'none';
+            (e.currentTarget as HTMLAnchorElement).style.background = 'none';
           }}
         >
-          View Details →
-        </button>
+          View Details <FiArrowRight size={14} />
+        </a>
       </div>
     </motion.div>
   );

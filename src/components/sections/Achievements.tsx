@@ -1,9 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { SiAndroid, SiUipath } from 'react-icons/si';
+import { LuCpu, LuCloud, LuMedal, LuScrollText, LuGraduationCap, LuCalendar } from 'react-icons/lu';
+import type { IconType } from 'react-icons';
 
 interface Achievement {
-  icon: string;
+  Icon: IconType;
   title: string;
   issuer: string;
   date?: string;
@@ -15,7 +18,7 @@ interface Achievement {
 
 const achievements: Achievement[] = [
   {
-    icon: '🤖',
+    Icon: SiAndroid,
     title: 'Android App Components',
     issuer: 'Vanderbilt University',
     description:
@@ -25,7 +28,7 @@ const achievements: Achievement[] = [
     badge: 'Certified',
   },
   {
-    icon: '🌐',
+    Icon: LuCpu,
     title: 'Exploring the Internet of Things',
     issuer: 'Jain Group of Institutes',
     description:
@@ -35,7 +38,7 @@ const achievements: Achievement[] = [
     badge: 'Certified',
   },
   {
-    icon: '⚙️',
+    Icon: SiUipath,
     title: 'Automation Explorer Training',
     issuer: 'UiPath Academy',
     description:
@@ -45,7 +48,7 @@ const achievements: Achievement[] = [
     badge: 'Certified',
   },
   {
-    icon: '☁️',
+    Icon: LuCloud,
     title: 'Azure Cloud Skilling Programme',
     issuer: 'Magic Bus · Bangalore Livelihood Centre',
     description:
@@ -55,7 +58,7 @@ const achievements: Achievement[] = [
     badge: 'Certified',
   },
   {
-    icon: '🏅',
+    Icon: LuMedal,
     title: 'International Sports Knowledge Olympiad',
     issuer: 'SOF — Science Olympiad Foundation',
     description:
@@ -66,10 +69,10 @@ const achievements: Achievement[] = [
   },
 ];
 
-const typeConfig = {
-  certification: { label: 'Certification', emoji: '📜' },
-  award: { label: 'Achievement', emoji: '🏅' },
-  academic: { label: 'Academic', emoji: '🎓' },
+const typeConfig: Record<Achievement['type'], { label: string; Icon: IconType }> = {
+  certification: { label: 'Certification', Icon: LuScrollText },
+  award: { label: 'Achievement', Icon: LuMedal },
+  academic: { label: 'Academic', Icon: LuGraduationCap },
 };
 
 function AchievementCard({ item, index }: { item: Achievement; index: number }) {
@@ -125,8 +128,8 @@ function AchievementCard({ item, index }: { item: Achievement; index: number }) 
 
         {/* Header row */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', position: 'relative', zIndex: 1 }}>
-          <span style={{ fontSize: '0.7rem', fontWeight: 600, padding: '4px 12px', borderRadius: '20px', background: `${item.color}20`, border: `1px solid ${item.color}40`, color: item.color, fontFamily: 'var(--font-inter)' }}>
-            {typeConfig[item.type].emoji} {typeConfig[item.type].label}
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.7rem', fontWeight: 600, padding: '4px 12px', borderRadius: '20px', background: `${item.color}20`, border: `1px solid ${item.color}40`, color: item.color, fontFamily: 'var(--font-inter)' }}>
+            {(() => { const TC = typeConfig[item.type].Icon; return <TC size={13} aria-hidden />; })()} {typeConfig[item.type].label}
           </span>
           <span style={{ fontSize: '0.7rem', fontWeight: 700, padding: '4px 12px', borderRadius: '20px', background: `${item.color}15`, color: `${item.color}cc`, border: `1px solid ${item.color}30`, fontFamily: 'var(--font-inter)', whiteSpace: 'nowrap' }}>
             {item.badge}
@@ -137,7 +140,6 @@ function AchievementCard({ item, index }: { item: Achievement; index: number }) 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', position: 'relative', zIndex: 1 }}>
           <div
             style={{
-              fontSize: '1.7rem',
               width: '54px',
               height: '54px',
               borderRadius: '12px',
@@ -145,6 +147,7 @@ function AchievementCard({ item, index }: { item: Achievement; index: number }) 
               alignItems: 'center',
               justifyContent: 'center',
               flexShrink: 0,
+              color: item.color,
               background: `${item.color}20`,
               border: `1px solid ${item.color}40`,
               boxShadow: `0 0 20px ${item.color}20`,
@@ -152,7 +155,7 @@ function AchievementCard({ item, index }: { item: Achievement; index: number }) 
               animationDelay: `${index * 0.3}s`,
             }}
           >
-            {item.icon}
+            <item.Icon size={26} aria-hidden />
           </div>
           <div>
             <h3 style={{ fontFamily: 'var(--font-space)', fontWeight: 700, color: 'var(--white)', lineHeight: 1.3, fontSize: '1rem' }}>
@@ -165,7 +168,7 @@ function AchievementCard({ item, index }: { item: Achievement; index: number }) 
         {/* Date (only when present) */}
         {item.date && (
           <div style={{ fontSize: '0.75rem', color: 'var(--gray)', display: 'flex', alignItems: 'center', gap: '6px', position: 'relative', zIndex: 1, fontFamily: 'var(--font-inter)' }}>
-            <span>📅</span>
+            <LuCalendar size={13} aria-hidden />
             <span>{item.date}</span>
           </div>
         )}
@@ -223,7 +226,7 @@ export default function Achievements() {
           transition={{ duration: 0.7 }}
           style={{ textAlign: 'center', marginBottom: '60px' }}
         >
-          <span className="section-label" style={{ color: '#F59E0B', textAlign: 'center' }}>// Certificates & Achievements</span>
+          <span className="section-label" style={{ color: '#F59E0B', textAlign: 'center' }}>// 05. Certificates & Achievements</span>
           <h2
             style={{
               fontFamily: 'var(--font-space)',

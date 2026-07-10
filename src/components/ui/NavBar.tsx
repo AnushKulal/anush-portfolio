@@ -1,12 +1,14 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { FiMenu, FiX } from 'react-icons/fi';
 
 const navLinks = [
   { label: 'About', href: '#about' },
   { label: 'Skills', href: '#skills' },
   { label: 'Experience', href: '#experience' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Awards', href: '#achievements' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -202,12 +204,15 @@ export default function NavBar() {
                 padding: '9px 13px',
                 cursor: 'pointer',
                 color: 'var(--white)',
-                fontSize: '1.05rem',
                 lineHeight: 1,
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
               aria-label="Toggle menu"
+              aria-expanded={menuOpen}
             >
-              {menuOpen ? '✕' : '☰'}
+              {menuOpen ? <FiX size={18} /> : <FiMenu size={18} />}
             </button>
           </div>
         </div>
@@ -278,10 +283,12 @@ export default function NavBar() {
       <style>{`
         .nav-desktop { display: flex !important; }
         .nav-mobile { display: none !important; }
-        @media (max-width: 860px) {
+        @media (max-width: 980px) {
+          .nav-brand { display: none !important; }
+        }
+        @media (max-width: 920px) {
           .nav-desktop { display: none !important; }
           .nav-mobile { display: block !important; }
-          .nav-brand { display: none !important; }
         }
       `}</style>
     </>

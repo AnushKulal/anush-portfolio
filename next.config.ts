@@ -1,11 +1,12 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
-  // Transpile Three.js and related packages for proper tree-shaking
-  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei', '@react-three/postprocessing'],
-
-  // Turbopack config (Next.js 16+ default bundler)
-  turbopack: {},
+  // Pin the workspace root so Turbopack ignores the stray parent lockfile
+  // (D:\AnushPortfolio\package-lock.json) and doesn't emit the root warning.
+  turbopack: {
+    root: path.resolve(__dirname),
+  },
 
   // Strict mode for React
   reactStrictMode: true,
